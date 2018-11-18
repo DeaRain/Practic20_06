@@ -2,12 +2,12 @@
 Практика веб-системс
 База данных - basjun.sql
 
-Пользователи:
+<p> Админ
+<p>Admin : qwerty
+<p> Юзер в бане
+<p> inban : 12345
 
-<p> Админ     Admin : qwerty
-<p> Юзер в бане    inban : 12345
-
-Просто пользователи
-simpleuser : simple
-user :  password 
-newplayer : game
+<p>Просто пользователи
+<p>simpleuser : simple
+<p>user :  password 
+<p>newplayer : game
