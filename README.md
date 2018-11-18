@@ -4,8 +4,8 @@
 
 Пользователи:
 
-Админ     Admin : qwerty
-Юзер в бане    inban : 12345
+<p> Админ     Admin : qwerty
+<p> Юзер в бане    inban : 12345
 
 Просто пользователи
 simpleuser : simple
