@@ -39,31 +39,40 @@ class ArticleController extends Controller
     public function actionTest()
     {
 
-//        $auth = Yii::$app->authManager;
-        // добавляем разрешение "isAdmin'"
-//        $isAdmin' = $auth->createPermission('isAdmin');
-//        $isAdmin'->description = 'Be a Admin';
-//        $auth->add($isAdmin');
-//
-//        $isUser = $auth->createPermission('isUser');
-//        $isUser->description = 'Be a User';
-//        $auth->add($updatePost);
-//
-//        $user = $auth->getRole('user');
-//        $auth->addChild($user, $updatePost);
-//        $admin = $auth->getRole('admin');
-//        $auth->addChild($admin, $createPost);
-//        $auth->addChild($admin, $author);
+        $auth = Yii::$app->authManager;
+       //  добавляем разрешение "isAdmin'"
+        if($auth->getRole('user')) return Yii::$app->response->redirect('/');
+        $user=$auth->createRole('user');
+        $admin=$auth->createRole('admin');
+
+        $auth->add($user);
+        $auth->add($admin);
+
+        $isAdmin = $auth->createPermission('isAdmin');
+        $isAdmin->description = 'Be a Admin';
+        $auth->add($isAdmin);
+       // $isAdmin=$auth->getPermission('isAdmin');
+
+        $isUser = $auth->createPermission('isUser');
+        $isUser->description = 'Be a User';
+        //$isUser=$auth->getPermission('isUser');
+        $auth->add($isUser);
+
+        //$user = $auth->getRole('user');
+        $auth->addChild($user, $isUser);
+        //$admin = $auth->getRole('admin');
+        $auth->addChild($admin, $isAdmin);
+        $auth->addChild($admin, $user);
        // return print_r(Yii::$app->user);
         //$auth = Yii::$app->authManager;
-//        return Yii::$app->user->can('isUser');
-//        return print_r ($auth->getRolesByUser(Yii::$app->user->getId()));
-//        return '<pre>'.print_r(Yii::$app->user,true).'</pre>';
-        return 1;
+       // return Yii::$app->user->can('isUser');
+        // print_r ($auth->getRolesByUser(Yii::$app->user->getId()));
+        // '<pre>'.print_r(Yii::$app->user,true).'</pre>';
+        return Yii::$app->response->redirect('/');
+        return "Роли успешно созданы";
     }
     public function actionRegister()
     {
-
         $regmodel = new RegisterForm();
 
         if ($regmodel->load(Yii::$app->request->post()) && $regmodel->validate()) {
@@ -96,4 +105,41 @@ class ArticleController extends Controller
             return $this->render('register', compact('regmodel'));
         }
     }
+
+    public function actionRegistera()
+    {
+        $regmodel = new RegisterForm();
+
+        if ($regmodel->load(Yii::$app->request->post()) && $regmodel->validate()) {
+            if (RegisterForm::find()->where(['username'=>$regmodel->username])->exists()) {
+                $result = 'Пользователь с таким именем существует';
+                return $this->render('register', compact('regmodel', 'result'));
+            }
+
+            if ($regmodel->validate()) {
+                $result = 'Регистрация прошла успешно!';
+
+                $user = new User();
+                $user->username = $regmodel->username;
+                $user->setPassword($regmodel->password);
+                $user->save(false);
+
+                $auth = Yii::$app->authManager;
+                $userRole = $auth->getRole('admin');
+                $auth->assign($userRole, $user->getId());
+
+
+                $regmodel=new RegisterForm();
+                return $this->render('registera', compact('regmodel', 'result'));
+            } else {
+                $result = 'Ошибка при регистрации!';
+                return $this->render('registera', compact('regmodel', 'result'));
+            }
+        }
+        else {
+            return $this->render('registera', compact('regmodel'));
+        }
+    }
+    
+    
 }

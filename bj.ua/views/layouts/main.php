@@ -71,6 +71,7 @@ AppAsset::register($this);
 
 
 
+
               <!-- Menu -->
             <nav id="menu">
 
@@ -100,6 +101,24 @@ AppAsset::register($this);
 
 
 
+                <?php $auth = Yii::$app->authManager;
+                //  добавляем разрешение "isAdmin'"
+                if(!$auth->getRole('user')) echo " <p> <a href=\"/article/test\" class=\"button primary fit\">Регистрация ролей</a> </p>";
+                else {
+
+
+                    if(Yii::$app->user->isGuest) {
+                    echo '<a href="/site/login" class="button primary fit">Авторизация</a>';
+                    echo '<p><p><a href="/article/register" class="button primary fit">Регистрация</a>';
+                    echo '<p><p><a href="/article/registera" class="button primary fit">Регистрация Админа</a>';
+                }
+                else {
+                    echo '<a href="/user" class="button primary fit">Личный Кабинет</a>';
+                    echo '<p><p><a href="/site/logout" class="button primary fit">'.'Logout (' . Yii::$app->user->identity->username . ')'.'</a></p>';
+                }
+
+                }
+?>
 
                 <header class="major">
                     <h2>Категории</h2>
@@ -117,21 +136,7 @@ AppAsset::register($this);
                 </ul>
             </nav>
 
-            <section id="search" class="alt">
-<!--                <a href="#" class="button primary fit">Авторизация</a>-->
 
-
-                <?php if(Yii::$app->user->isGuest) {
-                    echo '<a href="/site/login" class="button primary fit">Авторизация</a>';
-                    echo '<p><p><a href="/article/register" class="button primary fit">Регистрация</a>';
-                }
-                else {
-                    echo '<a href="/user" class="button primary fit">Личный Кабинет</a>';
-                    echo '<p><p><a href="/site/logout" class="button primary fit">'.'Logout (' . Yii::$app->user->identity->username . ')'.'</a></p>';
-                }?>
-
-
-            </section>
 
             <!-- Footer -->
             <footer id="footer">
