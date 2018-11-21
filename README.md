@@ -1,4 +1,11 @@
 # Practic20_06
+
+
+#Установка
+<p> Установить RBAC 
+<p>  yii migrate --migrationPath=@yii/rbac/migrations
+<p> Выполнить миграцию
+
 <p>База данных - basjun.sql
 
 <p> Админ
