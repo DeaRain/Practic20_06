@@ -2,7 +2,7 @@
 
 
 #Установка
-<p> Установить RBAC 
+<p> Мигрировать RBAC 
 <p>  yii migrate --migrationPath=@yii/rbac/migrations
 <p> Выполнить миграцию m181121_134758_test.php
 <p> yii migrate
