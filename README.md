@@ -3,7 +3,9 @@
 
 #Установка
 <p> Мигрировать RBAC 
-<p>  yii migrate --migrationPath=@yii/rbac/migrations
+<p> yii migrate --migrationPath=@yii/rbac/migrations
 <p> Выполнить миграцию m181121_134758_test.php
 <p> yii migrate
-<p> Перейти по пути yourdomen.ua /article/test для регистрации ролей (Админ, Юзер) в RBAC
+<p> Выполнить команду генерации пользователей, категорий, статей
+<p> yii fill
+# будет создано около 50 категорий, 200 статей и несколько случайных пользователей включая админа ADMIN 12345
