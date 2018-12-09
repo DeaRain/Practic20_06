@@ -9,9 +9,13 @@ use Yii;
  *
  * @property int $id
  * @property string $username
- * @property string $password
- * @property int $banned
  * @property string $auth_key
+ * @property string $password_hash
+ * @property string $password_reset_token
+ * @property string $email
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -29,10 +33,13 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
-            [['banned'], 'integer'],
-            [['username', 'password'], 'string', 'max' => 100],
-            [['auth_key'], 'string', 'max' => 255],
+            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['password_reset_token'], 'unique'],
         ];
     }
 
@@ -43,10 +50,14 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'username' => 'Имя пользователя',
-            'password' => 'Пароль',
-            'banned' => 'Блокировка',
-            'auth_key' => 'Auth Key',
+            'username' => 'Имя',
+            'auth_key' => 'Ключ авторизации',
+            'password_hash' => 'Хэш пароля',
+            'password_reset_token' => 'Password Reset Token',
+            'email' => 'E-mail',
+            'status' => 'Статус',
+            'created_at' => 'Дата регистрации',
+            'updated_at' => 'Updated At',
         ];
     }
 }

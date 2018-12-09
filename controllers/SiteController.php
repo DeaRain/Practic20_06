@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\RegisterForm;
 use app\models\User;
+use app\models\SignupForm;
 
 class SiteController extends Controller
 {
@@ -79,36 +80,27 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
-    public function actionRegister($userType="user")
+    public function actionSignup($userType="user")
     {
-        $regmodel = new RegisterForm();
-        if ($regmodel->load(Yii::$app->request->post()) && $regmodel->validate()) {
-            if (RegisterForm::find()->where(['username'=>$regmodel->username])->exists()) {
-                $result = 'Пользователь с таким именем существует';
-                return $this->render('register', compact('regmodel', 'result'));
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+
+                if (Yii::$app->getUser()->login($user)) {
+                    $auth = Yii::$app->authManager;
+                    if($userType=="admin") $userRole = $auth->getRole('admin');
+                    else $userRole = $auth->getRole('user');
+                    $auth->assign($userRole, $user->getId());
+
+                    return $this->goHome();
+                }
             }
-            if ($regmodel->validate()) {
-                $result = 'Регистрация прошла успешно!';
-                $user = new User();
-                $user->username = $regmodel->username;
-                $user->setPassword($regmodel->password);
-                $user->save(false);
-                $auth = Yii::$app->authManager;
-                if($userType=="admin") $userRole = $auth->getRole('admin');
-                else $userRole = $auth->getRole('user');
-                $auth->assign($userRole, $user->getId());
-                $regmodel=new RegisterForm();
-                return $this->render('register', compact('regmodel', 'result'));
-            } else {
-                $result = 'Ошибка при регистрации!';
-                return $this->render('register', compact('regmodel', 'result'));
-            }
-        } else {
-            return $this->render('register', compact('regmodel'));
         }
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
     }
 }

@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
+/* @var $model \common\models\LoginForm */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -15,29 +15,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>Пожалуйста, заполните следующие поля для входа:</p>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
+    <div class="row">
+        <div class="col-lg-5">
+            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Логин') ?>
+            <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Имя пользователя') ?>
 
-        <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
+            <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ])->label('Запомнить меня') ?>
+            <?= $form->field($model, 'rememberMe')->checkbox([
+                    'template' => "{input} {label}",
+                ])->label('Запомнить меня') ?>
 
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Войти', ['class' => 'button', 'name' => 'login-button']) ?>
-            </div>
+                <div style="color:#999;margin:1em 0">
+                   Если вы забыли пароль, можете <?= Html::a('восстановить его', ['site/request-password-reset']) ?>.
+                </div>
+
+                <div class="form-group">
+                    <?= Html::submitButton('Войти', ['class' => 'button', 'name' => 'login-button']) ?>
+                </div>
+            <?php ActiveForm::end(); ?>
         </div>
-
-    <?php ActiveForm::end(); ?>
-
+    </div>
 </div>

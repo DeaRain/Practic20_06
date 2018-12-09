@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
 use mihaildev\elfinder\ElFinder;
+
 mihaildev\elfinder\Assets::noConflict($this);
 
 /* @var $this yii\web\View */
@@ -22,8 +23,8 @@ mihaildev\elfinder\Assets::noConflict($this);
 
     <?= $form->field($model, 'author')->hiddenInput(['value'=>Yii::$app->user->getId()]) ->label(''); ?>
     <?= $form->field($model, 'content')->widget(CKEditor::className(),[
-    'editorOptions' => ElFinder::ckeditorOptions(['elfinder','path' => 'userId_'.$model->author],[
-        'preset' => 'standard', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+    'editorOptions' => ElFinder::ckeditorOptions(['elfinder','path' => getenv(EDITOR_USER_FOLDER).Yii::$app->user->getId()],[
+        'preset' => getenv('EDITOR_OPTIONS_PRESENT'), //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
         'inline' => false, //по умолчанию false
         'filter' => 'image',
     ]),

@@ -2,10 +2,10 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=btest',
-    'username' => 'root',
-    'password' => '',
-    'charset' => 'utf8',
+    'dsn' => getenv('DB_DSN')."dbname=".getenv('DB_NAME'),
+    'username' => getenv('DB_USER'),
+    'password' => getenv('DB_PASSWORD'),
+    'charset' => getenv('DB_CHARSET'),
 
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,

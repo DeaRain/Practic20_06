@@ -9,13 +9,20 @@
 namespace app\modules\user\controllers;
 use app\modules\user\models\Profile;
 use yii\web\Controller;
+use Yii;
 
 class ProfileController extends Controller
 {
     public function actionIndex()
     {
         $thisUser = Profile::findOne(['id'=>\Yii::$app->user->getId()]);
-        return $this->render('index',compact('thisUser'));
-
+        $user = [
+            'name'=>$thisUser->username,
+            'banned'=>'0'
+            ];
+        if($thisUser->status==1) {
+            $user['banned'] = 1;
+        }
+        return $this->render('index',compact('user'));
     }
 }

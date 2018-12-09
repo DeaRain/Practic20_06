@@ -13,7 +13,6 @@ use yii\db\ActiveRecord;
 
 class RegisterForm extends ActiveRecord
 {
-
     public static $username;
     public static $password;
 

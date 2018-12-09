@@ -17,6 +17,6 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
-        return $this->redirect("/");
+        return $this->goHome();
     }
 }

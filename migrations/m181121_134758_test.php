@@ -7,9 +7,6 @@ use yii\db\Migration;
  */
 class m181121_134758_test extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
 
     public function Up()
     {
@@ -18,7 +15,7 @@ class m181121_134758_test extends Migration
             'category_id' => $this->integer(),
             'name' => $this->string()->notNull(),
             'content' => $this->text(),
-            'author' => $this->string()->notNull(),
+            'author' => $this->integer(),
             'status' => $this->integer(),
         ]);
 
@@ -30,17 +27,39 @@ class m181121_134758_test extends Migration
 
         $this->createTable('user', [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull(),
-            'password' => $this->string()->notNull(),
-            'banned' => $this->integer(),
-            'auth_key' => $this->string(),
+            'username' => $this->string()->notNull()->unique(),
+            'auth_key' => $this->string(32)->notNull(),
+            'password_hash' => $this->string()->notNull(),
+            'password_reset_token' => $this->string()->unique(),
+            'email' => $this->string()->notNull()->unique(),
+            'status' => $this->smallInteger()->notNull()->defaultValue(10),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ]);
+
+        $this->addForeignKey(
+            'authorId',  // это "условное имя" ключа
+            'article', // это название текущей таблицы
+            'author', // это имя поля в текущей таблице, которое будет ключом
+            'user', // это имя таблицы, с которой хотим связаться
+            'id', // это поле таблицы, с которым хотим связаться
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'catalogId',  // это "условное имя" ключа
+            'article', // это название текущей таблицы
+            'category_id', // это имя поля в текущей таблице, которое будет ключом
+            'category', // это имя таблицы, с которой хотим связаться
+            'id', // это поле таблицы, с которым хотим связаться
+            'SET NULL',
+            'CASCADE'
+        );
+
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function Down()
     {
         $this->dropTable('article');
@@ -49,19 +68,4 @@ class m181121_134758_test extends Migration
 
         return true;
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m181121_134758_test cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

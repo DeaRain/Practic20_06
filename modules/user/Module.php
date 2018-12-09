@@ -1,9 +1,8 @@
 <?php
 
 namespace app\modules\user;
-use app\modules\user\models\Profile;
+
 use yii\filters\AccessControl;
-use Yii;
 
 
 /**
@@ -20,7 +19,6 @@ class Module extends \yii\base\Module
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-
                     [
                         'allow' => true,
                         'roles' => ['isUser'],

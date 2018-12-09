@@ -23,7 +23,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'testjb1212312309c',
+            'cookieValidationKey' => getenv("COOKIE_VALIDATION_KEY"),
             'baseUrl' => '',
         ],
         'authManager' => [
@@ -56,7 +56,6 @@ $config = [
             ],
         ],
         'db' => $db,
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -72,9 +71,9 @@ $config = [
             'class' => 'mihaildev\elfinder\PathController',
             'access' => ['@'],
             'root' => [
-                'baseUrl'=>'/web',
-                'path' => 'upload/users',
-                'name' => 'Files',
+                'baseUrl'=>getenv('EDITOR_BASE_URL'),
+                'path' => getenv('EDITOR_PATH'),
+                'name' => getenv('EDITOR_SYSTEM_FOLDER'),
                 'options' => [
 //                    'uploadOverwrite' => false,
 //                    'uploadDeny'  => array('all'),

@@ -1,9 +1,7 @@
 <?php
-
 /* @var $this yii\web\View */
-
+use yii\widgets\ListView;
 $this->title = 'Категория: '.$category['name'];
-
 ?>
 <!-- Banner -->
 <section id="banner">
@@ -18,30 +16,25 @@ $this->title = 'Категория: '.$category['name'];
 </span>
 </section>
 
-
 <!-- Section -->
 <section>
-
-    <div class="posts">
-
-        <?php foreach ($articles as $article){?>
-
-        <article>
-            <a href="#" class="image"><img src="/images/article/<?=$article['id']?>.jpg" alt="" /></a>
-            <h3><?= $article['name']?></h3>
-            <p><?php $contain =  \yii\helpers\StringHelper::truncate(strip_tags($article['content']),200,'...');
-            echo $contain;?></p>
-            <ul class="actions">
-                <li><a href="<?= \yii\helpers\Url::to((['article/view','id'=>$article['id']]))?>" class="button">Подробней</a></li>
-            </ul>
-        </article>
-        <?php }?>
-    </div>
-    <div align="center">
-<?= \yii\widgets\LinkPager::widget([
-    'pagination' => $pages,
-    'prevPageLabel' => '&laquo; Назад',
-    'nextPageLabel' => 'Далее &raquo;',
-]);?>
-    </div>
+        <?= ListView::widget([
+            'dataProvider' => $provider,
+            'itemView' => '_post',
+            'options' => [
+                'class' => 'posts'
+            ],
+            'layout' => "{items}</div><div align=\"center\">\n{pager}",
+            'itemOptions' => [
+                'tag' => null,
+            ],
+            'pager' => [
+                'nextPageLabel' => 'Следующая',
+                'prevPageLabel' => 'Предыдущая',
+                'maxButtonCount' => 5,
+                'options' => [
+                    'class' => 'pagination'
+                ],
+            ],
+        ]); ?>
 </section>

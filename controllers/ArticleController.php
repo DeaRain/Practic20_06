@@ -1,10 +1,12 @@
 <?php
 
 namespace app\controllers;
+
 use app\models\Category;
 use yii\data\Pagination;
 use yii\web\Controller;
 use app\models\Article;
+use yii\data\ActiveDataProvider;
 
 class ArticleController extends Controller
 {
@@ -15,13 +17,22 @@ class ArticleController extends Controller
 
     public function actionAll($id=null)
     {
-        if(!$id) return $this->redirect('/');
+        if(!$id) return $this->goHome();
         $category = Category::find()->where(['id'=>$id])->limit(1)->one();
         $query = Article::find()->where(['category_id'=>$id,'status'=>'1']);
-        $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 4]);
-        $articles = $query->offset($pages->offset)->limit($pages->limit)->all();
-        return $this->render('all',compact('articles','category','pages'));
+
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 4,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+        ]);
+        return $this->render('all',compact('provider','category'));
     }
 
     public function actionView($id)

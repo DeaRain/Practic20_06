@@ -30,14 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'username',
-            'password',
-//            'banned',
-            ['attribute'=>'banned',
-                'value'=>function($data){
-                    if($data->banned){ return 'Заблокирован';}
-                    else return 'Активный';
-                }],
             'auth_key',
+            'password_hash',
+            'password_reset_token',
+            'email:email',
+            ['attribute'=>'status',
+                'value'=>function($data){
+                    if($data->status==1){ return 'Заблокирован';}
+                    elseif($data->status==10) return 'Активный';
+                    else $data->status;
+                }],
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
 

@@ -3,11 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use app\widgets\Alert;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\models\Category;
 AppAsset::register($this);
@@ -39,7 +35,6 @@ AppAsset::register($this);
     <!-- Main -->
     <div id="main">
         <div class="inner">
-
             <!-- Header -->
             <header id="header">
                 <a href="/" class="logo"><strong>На главную страницу</strong></a>
@@ -60,15 +55,12 @@ AppAsset::register($this);
     <!-- Sidebar -->
     <div id="sidebar">
         <div class="inner">
-
             <!-- Search -->
             <section id="search" class="alt">
                 <form method="post" action="#">
                         <input type="text" name="query" id="query" placeholder="Search" />
                 </form>
             </section>
-
-
               <!-- Menu -->
             <nav id="menu">
 
@@ -91,16 +83,13 @@ AppAsset::register($this);
                 }?>
 
 
-
-
-
                 <?php $auth = Yii::$app->authManager;
                 if(!$auth->getRole('user')) echo " <p> <a href=\"/article/test\" class=\"button primary fit\">Регистрация ролей</a> </p>";
                 else {
                     if(Yii::$app->user->isGuest) {
                     echo '<a href="/site/login" class="button primary fit">Авторизация</a>';
-                    echo '<p><p><a href="/site/register" class="button primary fit">Регистрация</a>';
-                    echo '<p><p><a href="/site/register?userType=admin" class="button primary fit">Регистрация Админа</a>';
+                    echo '<p><p><a href="/site/signup" class="button primary fit">Регистрация</a>';
+                    echo '<p><p><a href="/site/signup?userType=admin" class="button primary fit">Регистрация Админа</a>';
                 }
                 else {
                     echo '<a href="/user" class="button primary fit">Личный Кабинет</a>';
@@ -133,7 +122,6 @@ AppAsset::register($this);
 
 <!-- Scripts -->
 <?php $this->endBody() ?>
-
 </body>
 </html>
 <?php $this->endPage() ?>
