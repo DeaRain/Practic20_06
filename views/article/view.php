@@ -4,9 +4,15 @@ $this->title = $article["name"];
 ?>
 
 <section>
+
     <header class="main">
         <h1><?= $article['name']?></h1>
     </header>
-    <span class="image main"><img src="/images/article/<?= $article['id']?>.jpg" alt="" /></span>
+
+    <span class="image main">
+        <?= yii\helpers\Html::img('/images/article/'.$article['id'].'.jpg') ?>
+    </span>
+
     <?= $article['content']?>
+
 </section>

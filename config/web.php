@@ -62,7 +62,10 @@ $config = [
             'rules' => [
                 'article/all/<id:\d+>'=>'article/all',
                 'article/view/<id:\d+>'=>'article/view',
-                'article/view/<id:\d+>'=>'article/view',
+                'article/search/<query:>'=>'article/search',
+                'site/signup/<userType>'=>'site/signup',
+                'user/<controller:(article)>/<action:(view|update|delete)>/<id:\d+>' => 'user/<controller>/<action>',
+                'admin/<controller:(article|category|user)>/<action:(view|update|delete)>/<id:\d+>' => 'admin/<controller>/<action>',
             ],
         ],
     ],

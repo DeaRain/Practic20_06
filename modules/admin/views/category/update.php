@@ -14,9 +14,14 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="category-update">
 
     <article>
-        <p><span class="image right"><img src="/images/all/<?=$model['id']?>.jpg" alt="" /> <p>
-        <h1><?= Html::encode($this->title) ?></h1>
-        </p> </span></p>
+        <p>
+            <span class="image right">
+                <?= yii\helpers\Html::img('/images/all/'.$model['id'].'.jpg') ?>
+                <p>
+                <h1><?= Html::encode($this->title) ?></h1>
+                </p>
+            </span>
+        </p>
     </article>
     <?= $this->render('_form', [
         'model' => $model,

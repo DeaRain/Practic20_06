@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use app\assets\AppAsset;
 use app\models\Category;
 AppAsset::register($this);
@@ -18,6 +19,7 @@ AppAsset::register($this);
 -->
 <html>
 <html lang="<?= Yii::$app->language ?>">
+
 <head>
 
     <meta charset="<?= Yii::$app->charset ?>">
@@ -26,9 +28,12 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+
 </head>
+
 <body class="is-preload">
 <?php $this->beginBody() ?>
+
 <!-- Wrapper -->
 <div id="wrapper">
 
@@ -38,17 +43,13 @@ AppAsset::register($this);
             <!-- Header -->
             <header id="header">
                 <a href="/" class="logo"><strong>На главную страницу</strong></a>
+
                 <ul class="icons">
-                    <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-                    <li><a href="#" class="icon fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-                    <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-                    <li><a href="#" class="icon fa-medium"><span class="label">Medium</span></a></li>
+                    <li><a href=<?=Url::to('/article/search')?> class="button primary icon fa-search">Поиск по сайту</a></li>
                 </ul>
             </header>
 
             <?= $content ?>
-
         </div>
     </div>
 
@@ -57,46 +58,37 @@ AppAsset::register($this);
         <div class="inner">
             <!-- Search -->
             <section id="search" class="alt">
-                <form method="post" action="#">
+                <form method="get" action=<?=Url::to('/article/search')?>>
                         <input type="text" name="query" id="query" placeholder="Search" />
                 </form>
             </section>
               <!-- Menu -->
             <nav id="menu">
 
-                <?php if(!Yii::$app->user->isGuest) {
-                    if(Yii::$app->user->can('isAdmin')){ ?>
-                        <header class="major">
-                            <h2>Инструментарий</h2>
-                        </header>
-                            <ul>
-                                <?php
-                                echo '<li><a href='.\yii\helpers\Url::to(['/admin/category']). '>
-                           Управление категориями </a></li>';
-                                echo '<li><a href='.\yii\helpers\Url::to(['/admin/article']). '>
-                           Управление статьями </a></li>';
-                                echo '<li><a href='.\yii\helpers\Url::to(['/admin/user']). '>
-                           Список пользователей </a></li> <p></p>';
-                                ?>
-                            </ul>
-                    <?php }
-                }?>
+                <?php if(Yii::$app->user->can('isAdmin')): ?>
+                    <header class="major">
+                        <h2>Инструментарий</h2>
+                    </header>
+                        <ul>
+                            <?php
+                                echo '<li><a href='.Url::to(['/admin/category']).'> Управление категориями </a></li>';
+                                echo '<li><a href='.Url::to(['/admin/article']).'> Управление статьями </a></li>';
+                                echo '<li><a href='.Url::to(['/admin/user']).'> Список пользователей </a></li><p></p>';
+                            ?>
+                        </ul>
+                <?php endif;?>
 
-
-                <?php $auth = Yii::$app->authManager;
-                if(!$auth->getRole('user')) echo " <p> <a href=\"/article/test\" class=\"button primary fit\">Регистрация ролей</a> </p>";
-                else {
-                    if(Yii::$app->user->isGuest) {
-                    echo '<a href="/site/login" class="button primary fit">Авторизация</a>';
-                    echo '<p><p><a href="/site/signup" class="button primary fit">Регистрация</a>';
-                    echo '<p><p><a href="/site/signup?userType=admin" class="button primary fit">Регистрация Админа</a>';
-                }
-                else {
-                    echo '<a href="/user" class="button primary fit">Личный Кабинет</a>';
-                    echo '<p><p><a href="/site/logout" class="button primary fit">'.'Logout (' . Yii::$app->user->identity->username . ')'.'</a></p>';
-                }
-                }
+                <?php
+                if(Yii::$app->user->can('isUser')) :
+                    echo '<a href='.Url::to(['/user']).' class="button primary fit">Личный Кабинет</a>';
+                    echo '<p><p><a href='.Url::to(['/site/logout']).' class="button primary fit">'.'Logout (' . Yii::$app->user->identity->username . ')'.'</a></p>';
+                else:
+                    echo '<a href='.Url::to(['/site/login']).' class="button primary fit">Авторизация</a>';
+                    echo '<p><p><a href='.Url::to(['/site/signup']).' class="button primary fit">Регистрация</a>';
+                    echo '<p><p><a href='.Url::to(['/site/signup','userType'=>'admin']).' class="button primary fit">Регистрация Админа</a></li>';
+                endif;
                 ?>
+
                 <header class="major">
                     <h2>Категории</h2>
                 </header>
@@ -104,7 +96,7 @@ AppAsset::register($this);
                     <?php
                     $temp = Category::find()->all();
                      foreach ($temp as $category){
-                         echo '<li><a href='.\yii\helpers\Url::to(['/article/all','id'=>$category['id']]). '>'.$category['name'].'</a></li>';
+                         echo '<li><a href='.Url::to(['/article/all','id'=>$category['id']]). '>'.$category['name'].'</a></li>';
                      }
                     ?>
                 </ul>
@@ -117,7 +109,6 @@ AppAsset::register($this);
 
         </div>
     </div>
-
 </div>
 
 <!-- Scripts -->

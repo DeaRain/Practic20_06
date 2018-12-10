@@ -1,25 +1,24 @@
 <?php
-/* @var $this yii\web\View */
-use yii\widgets\ListView;
-$this->title = 'Категория: '.$category['name'];
-?>
-<!-- Banner -->
-<section id="banner">
-    <div class="content">
-        <header>
-            <h1><?=$category['name']?></h1>
-        </header>
-        <p><?=$category['descr']?></p>
-    </div>
-    <span class="image object">
-        <?= yii\helpers\Html::img('/images/all/'.$category['id'].'.jpg') ?>
-    </span>
-</section>
 
-<!-- Section -->
-<section>
+use yii\helpers\Html;
+use yii\widgets\ListView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\ArticleSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Поиск статьи';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="article-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>Показано <b>1-<?=$dataProvider->count?></b> из <b><?=$dataProvider->totalCount?></b>
+    <section>
         <?= ListView::widget([
-            'dataProvider' => $provider,
+            'dataProvider' => $dataProvider,
             'itemView' => '_post',
             'options' => [
                 'class' => 'posts'
@@ -37,4 +36,8 @@ $this->title = 'Категория: '.$category['name'];
                 ],
             ],
         ]); ?>
-</section>
+    </section>
+
+
+
+</div>

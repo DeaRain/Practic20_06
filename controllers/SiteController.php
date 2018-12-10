@@ -11,6 +11,8 @@ use app\models\LoginForm;
 use app\models\RegisterForm;
 use app\models\User;
 use app\models\SignupForm;
+use app\models\Article;
+use app\models\ArticleSearch;
 
 class SiteController extends Controller
 {
@@ -103,4 +105,5 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
 }

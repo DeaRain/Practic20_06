@@ -3,10 +3,11 @@
 namespace app\controllers;
 
 use app\models\Category;
-use yii\data\Pagination;
 use yii\web\Controller;
 use app\models\Article;
 use yii\data\ActiveDataProvider;
+use app\models\ArticleSearch;
+use Yii;
 
 class ArticleController extends Controller
 {
@@ -39,5 +40,20 @@ class ArticleController extends Controller
     {
         $article = Article::find()->where(['id'=>$id])->limit(1)->one();
         return $this->render('view',compact('article'));
+    }
+
+    public function actionSearch($query=null)
+    {
+        $searchModel = new ArticleSearch();
+
+        if($query!=null){
+            $searchModel->name = $query;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize=6;
+        return $this->render('search', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
