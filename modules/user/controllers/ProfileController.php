@@ -18,7 +18,7 @@ class ProfileController extends Controller
         $user = [
             'name'=>$thisUser->username,
             'banned'=>'0'
-            ];
+        ];
         if($thisUser->status==1) {
             $user['banned'] = 1;
         }

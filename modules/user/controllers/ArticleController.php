@@ -86,8 +86,7 @@ class ArticleController extends Controller
     {
         $model = new Article();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if (is_object($model->imageFile)) {
                 $model->imageFile->saveAs('images/article/' . $model->id . '.jpg');
             }

@@ -48,8 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'status',
                 'value'=>function($data){
-                    if($data->status){ return 'Активен';}
-                    else return 'На модерации';
+                    return $data->userStatus;
                 }],
             'name',
             'content:ntext',

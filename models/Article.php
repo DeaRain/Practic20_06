@@ -78,4 +78,21 @@ class Article extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
+
+    public function getTextStatus()
+    {
+        if($this->status){
+            return 'Активен';
+        } else {
+            return 'Отключен';
+        }
+    }
+    public function getUserStatus()
+    {
+        if($this->status){
+            return 'Активен';
+        } else {
+            return 'На модерации';
+        }
+    }
 }

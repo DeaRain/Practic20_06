@@ -2,12 +2,12 @@
 /* @var $this yii\web\View */
 $this->title = $article["name"];
 $this->params['breadcrumbs'][] = [
-    'label' => 'Все категории', // название ссылки
-    'url' => [\yii\helpers\Url::to(['/article/category'])] // сама ссылка
+    'label' => 'Все категории',
+    'url' => [\yii\helpers\Url::to(['/article/category'])]
 ];
 $this->params['breadcrumbs'][] = [
-    'label' => $article->category->name, // название ссылки
-    'url' => [\yii\helpers\Url::to(['/article/all','id'=>$article->category->id])] // сама ссылка
+    'label' => $article->category->name,
+    'url' => [\yii\helpers\Url::to(['/article/all','id'=>$article->category->id])]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

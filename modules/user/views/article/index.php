@@ -48,9 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'status',
                 'value'=>function($data){
-        if($data->status){
-            return 'Активен';
-        } else return 'На_модерации';
+                    return $data->userStatus;
                 }],
             ['class' => 'yii\grid\ActionColumn'],
         ],

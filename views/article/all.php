@@ -1,10 +1,11 @@
 <?php
 /* @var $this yii\web\View */
 use yii\widgets\ListView;
+
 $this->title = 'Категория: '.$category['name'];
 $this->params['breadcrumbs'][] = [
-    'label' => 'Все категории', // название ссылки
-    'url' => [\yii\helpers\Url::to(['/article/category'])] // сама ссылка
+    'label' => 'Все категории',
+    'url' => [\yii\helpers\Url::to(['/article/category'])]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

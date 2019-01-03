@@ -36,7 +36,6 @@ AppAsset::register($this);
 
 <!-- Wrapper -->
 <div id="wrapper">
-
     <!-- Main -->
     <div id="main">
         <div class="inner">
@@ -46,22 +45,15 @@ AppAsset::register($this);
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ])?>
             </header>
-
             <?= $content ?>
         </div>
     </div>
-
     <!-- Sidebar -->
     <div id="sidebar">
         <div class="inner">
             <section id="search" class="alt">
                 <a href='<?=Url::to(['/user'])?>' class="button primary fit icon fa-search">Поиск по сайту</a>
             </section>
-
-
-
-
-
               <!-- Menu -->
             <nav id="menu">
 
@@ -86,8 +78,7 @@ AppAsset::register($this);
                     echo '<a href='.Url::to(['/site/login']).' class="button primary fit">Авторизация</a>';
                     echo '<p><p><a href='.Url::to(['/site/signup']).' class="button primary fit">Регистрация</a>';
                     echo '<p><p><a href='.Url::to(['/site/signup','userType'=>'admin']).' class="button primary fit">Регистрация Админа</a></li>';
-                endif;
-                ?>
+                endif; ?>
 
                 <?= \app\components\CategoryList::widget([
                     'title' => 'Список категорий',
