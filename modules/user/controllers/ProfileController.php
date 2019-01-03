@@ -7,15 +7,14 @@
  */
 
 namespace app\modules\user\controllers;
-use app\modules\user\models\Profile;
+use app\models\ModuleUser;
 use yii\web\Controller;
-use Yii;
 
 class ProfileController extends Controller
 {
     public function actionIndex()
     {
-        $thisUser = Profile::findOne(['id'=>\Yii::$app->user->getId()]);
+        $thisUser = ModuleUser::findOne(['id'=>\Yii::$app->user->getId()]);
         $user = [
             'name'=>$thisUser->username,
             'banned'=>'0'

@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    <?php if($status):?>
     <p>Показано <b>1-<?=$dataProvider->count?></b> из <b><?=$dataProvider->totalCount?></b>
     <section>
         <?= ListView::widget([
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]); ?>
     </section>
-
+<?php endif;?>
 
 
 </div>

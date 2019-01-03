@@ -15,6 +15,7 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * @inheritdoc
      */
@@ -32,6 +33,7 @@ class Category extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['descr'], 'string'],
             [['name'], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -42,8 +44,9 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'descr' => 'Descr',
+            'name' => 'Название',
+            'descr' => 'Описание',
+            'imageFile' => 'Главная картинка',
         ];
     }
 

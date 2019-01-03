@@ -19,6 +19,7 @@ use Yii;
  */
 class Article extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * @inheritdoc
      */
@@ -39,6 +40,7 @@ class Article extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['author'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -48,21 +50,25 @@ class Article extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'category_id' => 'Category ID',
-            'name' => 'Имя',
+            'id' => 'ИД',
+            'category_id' => 'Категория',
+            'imageFile' => 'Главная картинка',
+            'name' => 'Название',
             'content' => 'Содержание',
-            'author' => 'Author',
-            'status' => 'Status',
+            'author' => 'Автор',
+            'status' => 'Статус',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAuthor0()
+    public function getAuthorName()
     {
         return $this->hasOne(User::className(), ['id' => 'author']);
+    }
+    public function getUser(){
+        return $this->hasOne(User::className(),['id'=>'author']);
     }
 
     /**

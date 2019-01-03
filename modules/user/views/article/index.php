@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
-use app\modules\user\models\Profile;
+use app\models\ModuleUser;
 
 
 /* @var $this yii\web\View */
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'author',
                 'value'=>function($data,$name="admin"){
-                    return Profile::findOne(['id'=>$data->author])->username;
+                    return ModuleUser::findOne(['id'=>$data->author])->username;
                 }],
             ['attribute'=>'status',
                 'value'=>function($data){

@@ -2,6 +2,11 @@
 /* @var $this yii\web\View */
 use yii\widgets\ListView;
 $this->title = 'Категория: '.$category['name'];
+$this->params['breadcrumbs'][] = [
+    'label' => 'Все категории', // название ссылки
+    'url' => [\yii\helpers\Url::to(['/article/category'])] // сама ссылка
+];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <!-- Banner -->
 <section id="banner">
@@ -20,7 +25,7 @@ $this->title = 'Категория: '.$category['name'];
 <section>
         <?= ListView::widget([
             'dataProvider' => $provider,
-            'itemView' => '_post',
+                'itemView' => '_post',
             'options' => [
                 'class' => 'posts'
             ],

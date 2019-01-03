@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\user\models;
+namespace app\models;
 
 use Yii;
 
@@ -16,10 +16,8 @@ use Yii;
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
- *
- * @property Article[] $articles
  */
-class Profile extends \yii\db\ActiveRecord
+class ModuleUser extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -52,20 +50,17 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
+            'username' => 'Имя',
+            'auth_key' => 'Ключ авторизации',
+            'password_hash' => 'Хэш пароля',
             'password_reset_token' => 'Password Reset Token',
-            'email' => 'Email',
-            'status' => 'Status',
-            'created_at' => 'Created At',
+            'email' => 'E-mail',
+            'status' => 'Статус',
+            'created_at' => 'Дата регистрации',
             'updated_at' => 'Updated At',
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getArticles()
     {
         return $this->hasMany(Article::className(), ['author' => 'id']);

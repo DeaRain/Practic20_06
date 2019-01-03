@@ -3,7 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\modules\admin\models\User;
+use app\models\ModuleUser;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -36,7 +36,7 @@ class UserController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
+            'query' => ModuleUser::find(),
         ]);
 
         return $this->render('index', [
@@ -119,7 +119,7 @@ class UserController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = ModuleUser::findOne($id)) !== null) {
             return $model;
         }
 

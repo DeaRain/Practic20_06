@@ -41,12 +41,10 @@ AppAsset::register($this);
     <div id="main">
         <div class="inner">
             <!-- Header -->
-            <header id="header">
-                <a href="/" class="logo"><strong>На главную страницу</strong></a>
-
-                <ul class="icons">
-                    <li><a href=<?=Url::to('/article/search')?> class="button primary icon fa-search">Поиск по сайту</a></li>
-                </ul>
+            <header id="header" style="padding-top: 55px">
+                <?= \yii\widgets\Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])?>
             </header>
 
             <?= $content ?>
@@ -56,12 +54,14 @@ AppAsset::register($this);
     <!-- Sidebar -->
     <div id="sidebar">
         <div class="inner">
-            <!-- Search -->
             <section id="search" class="alt">
-                <form method="get" action=<?=Url::to('/article/search')?>>
-                        <input type="text" name="query" id="query" placeholder="Search" />
-                </form>
+                <a href='<?=Url::to(['/user'])?>' class="button primary fit icon fa-search">Поиск по сайту</a>
             </section>
+
+
+
+
+
               <!-- Menu -->
             <nav id="menu">
 
@@ -89,17 +89,10 @@ AppAsset::register($this);
                 endif;
                 ?>
 
-                <header class="major">
-                    <h2>Категории</h2>
-                </header>
-                <ul>
-                    <?php
-                    $temp = Category::find()->all();
-                     foreach ($temp as $category){
-                         echo '<li><a href='.Url::to(['/article/all','id'=>$category['id']]). '>'.$category['name'].'</a></li>';
-                     }
-                    ?>
-                </ul>
+                <?= \app\components\CategoryList::widget([
+                    'title' => 'Список категорий',
+                    'limit'=>9,
+                ]) ?>
             </nav>
 
             <!-- Footer -->

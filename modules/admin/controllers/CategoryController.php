@@ -3,7 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\modules\admin\models\Category;
+use app\models\Category;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
