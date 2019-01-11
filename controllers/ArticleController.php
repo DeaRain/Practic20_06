@@ -9,11 +9,6 @@ use Yii;
 
 class ArticleController extends Controller
 {
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
-
     public function actionView($id)
     {
         $article = Article::find()->where(['id'=>$id])->limit(1)->one();
