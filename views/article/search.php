@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <section>
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
-            'itemView' => '_post',
+            'itemView' => '..\_itemView\_post',
             'options' => [
                 'class' => 'posts'
             ],

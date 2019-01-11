@@ -3,11 +3,11 @@
 $this->title = $article["name"];
 $this->params['breadcrumbs'][] = [
     'label' => 'Все категории',
-    'url' => [\yii\helpers\Url::to(['/article/category'])]
+    'url' => [\yii\helpers\Url::to(['/category/category'])]
 ];
 $this->params['breadcrumbs'][] = [
     'label' => $article->category->name,
-    'url' => [\yii\helpers\Url::to(['/article/all','id'=>$article->category->id])]
+    'url' => [\yii\helpers\Url::to(['/category/view','id'=>$article->category->id])]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

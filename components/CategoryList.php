@@ -34,10 +34,10 @@ class CategoryList extends Widget{
         $content = '<ul>';
         $categoryes = Category::find()->limit($this->limit)->all();
         foreach ($categoryes as $category){
-            $content.= '<li><a href='.Url::to(['/article/all','id'=>$category['id']]). '>'.$category['name'].'</a></li>';
+            $content.= '<li><a href='.Url::to(['/category/view','id'=>$category['id']]). '>'.$category['name'].'</a></li>';
         }
         if(count($categoryes)==$this->limit){
-            $content.= '<li><a href='.Url::to(['/article/category']). ' style="color:#00b027" >Посмотреть другие категории..</a></li>';
+            $content.= '<li><a href='.Url::to(['/category/category']). ' style="color:#00b027" >Посмотреть другие категории..</a></li>';
         }
 
         $content = $title. $content. '</ul>';

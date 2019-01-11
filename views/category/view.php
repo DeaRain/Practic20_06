@@ -5,7 +5,7 @@ use yii\widgets\ListView;
 $this->title = 'Категория: '.$category['name'];
 $this->params['breadcrumbs'][] = [
     'label' => 'Все категории',
-    'url' => [\yii\helpers\Url::to(['/article/category'])]
+    'url' => [\yii\helpers\Url::to(['/category/category'])]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <section>
         <?= ListView::widget([
             'dataProvider' => $provider,
-                'itemView' => '_post',
+                'itemView' => '..\_itemView\_post',
             'options' => [
                 'class' => 'posts'
             ],

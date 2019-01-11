@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <H3>Список всех категорий</H3>
     <div  style="column-count: 3">
         <?php foreach($categoryes as $category):?>
-            <?=\yii\helpers\Html::a("$category->name", ['article/all','id'=>$category->id], ['class' => 'list-group-item']); ?>
+            <?=\yii\helpers\Html::a("$category->name", ['category/view','id'=>$category->id], ['class' => 'list-group-item']); ?>
         <?php endforeach;?>
     </div>
 

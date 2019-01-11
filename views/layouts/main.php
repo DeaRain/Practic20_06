@@ -52,7 +52,7 @@ AppAsset::register($this);
     <div id="sidebar">
         <div class="inner">
             <section id="search" class="alt">
-                <a href='<?=Url::to(['/user'])?>' class="button primary fit icon fa-search">Поиск по сайту</a>
+                <a href='<?=Url::to(['/search'])?>' class="button primary fit icon fa-search">Поиск по сайту</a>
             </section>
               <!-- Menu -->
             <nav id="menu">
@@ -73,11 +73,11 @@ AppAsset::register($this);
                 <?php
                 if(Yii::$app->user->can('isUser')) :
                     echo '<a href='.Url::to(['/user']).' class="button primary fit">Личный Кабинет</a>';
-                    echo '<p><p><a href='.Url::to(['/site/logout']).' class="button primary fit">'.'Logout (' . Yii::$app->user->identity->username . ')'.'</a></p>';
+                    echo '<p><p><a href='.Url::to(['/auth/logout']).' class="button primary fit">'.'Logout (' . Yii::$app->user->identity->username . ')'.'</a></p>';
                 else:
-                    echo '<a href='.Url::to(['/site/login']).' class="button primary fit">Авторизация</a>';
-                    echo '<p><p><a href='.Url::to(['/site/signup']).' class="button primary fit">Регистрация</a>';
-                    echo '<p><p><a href='.Url::to(['/site/signup','userType'=>'admin']).' class="button primary fit">Регистрация Админа</a></li>';
+                    echo '<a href='.Url::to(['/auth/login']).' class="button primary fit">Авторизация</a>';
+                    echo '<p><p><a href='.Url::to(['/auth/signup']).' class="button primary fit">Регистрация</a>';
+                    echo '<p><p><a href='.Url::to(['/auth/signup','userType'=>'admin']).' class="button primary fit">Регистрация Админа</a></li>';
                 endif; ?>
 
                 <?= \app\components\CategoryList::widget([
