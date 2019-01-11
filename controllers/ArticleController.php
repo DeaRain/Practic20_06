@@ -12,7 +12,7 @@ class ArticleController extends Controller
     public function actionView($id)
     {
         $article = Article::find()->where(['id'=>$id])->limit(1)->one();
-        $catName= $article->category->name;
+        $catName = $article->category->name;
         return $this->render('view',compact('article','catName'));
     }
 
