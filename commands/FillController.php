@@ -75,6 +75,7 @@ class FillController extends Controller
             $art->content=$content;
             $art->author=rand(1,5);
             $art->status=rand(0,1);
+            $art->photo='default.jpg';
             $art->save();
         }
         for ($i = 2;$i<50;$i++){
@@ -85,6 +86,7 @@ class FillController extends Controller
                 $art->content=$content;
                 $art->author=rand(1,5);
                 $art->status=rand(0,1);
+                $art->photo='default1.jpg';
                 $art->save();
             }
         }
