@@ -66,15 +66,16 @@ class ArticleController extends Controller
     public function actionCreate()
     {
         $model = new Article();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if(Yii::$app->request->isPost){
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if (is_object($model->imageFile)) {
-                $model->imageFile->saveAs('images/article/' . $model->id . '.jpg');
-            }
-            return $this->redirect(['view', 'id' => $model->id]);
+            $tempName = $model->uploadPhoto();
         }
-
+        if ($model->load(Yii::$app->request->post())) {
+        $model->photo = $tempName;
+        if ($model->save()){
+            return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -90,15 +91,16 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if(Yii::$app->request->isPost){
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if (is_object($model->imageFile)) {
-                $model->imageFile->saveAs('images/article/' . $model->id . '.jpg');
-            }
-            return $this->redirect(['view', 'id' => $model->id]);
+            $tempName = $model->uploadPhoto();
         }
-
+        if ($model->load(Yii::$app->request->post())) {
+            $model->photo = $tempName;
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
         return $this->render('update', [
             'model' => $model,
         ]);

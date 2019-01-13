@@ -13,13 +13,14 @@ use Yii;
  * @property string $content
  * @property int $author
  * @property int $status
- *
+ * @property string $photo
  * @property User $author0
  * @property Category $category
  */
 class Article extends \yii\db\ActiveRecord
 {
     public $imageFile;
+    const DEFAULT_LOGO_PATH = "default.jpg";
     /**
      * @inheritdoc
      */
@@ -39,6 +40,7 @@ class Article extends \yii\db\ActiveRecord
             [['content'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['author'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author' => 'id']],
+            [['photo'], 'safe'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
@@ -56,6 +58,7 @@ class Article extends \yii\db\ActiveRecord
             'name' => 'Название',
             'content' => 'Содержание',
             'author' => 'Автор',
+            'photo' => 'Главное фото',
             'status' => 'Статус',
         ];
     }
@@ -94,5 +97,15 @@ class Article extends \yii\db\ActiveRecord
         } else {
             return 'На модерации';
         }
+    }
+    public function uploadPhoto(){
+        if($this->validate('imageFile')){
+            return Yii::$app->photoStorage->saveImage($this->imageFile);
+        }else{
+            return self::DEFAULT_LOGO_PATH;
+        }
+    }
+    public function getPhotoPath(){
+        return Yii::$app->photoStorage->getImagePath($this->photo);
     }
 }

@@ -2,7 +2,7 @@
 <article>
 
     <a href=<?=\yii\helpers\Url::to((['article/view','id'=>$model->id]))?> class="image">
-    <?= yii\helpers\Html::img('/images/article/'.$model->id.'.jpg')?>
+    <?= yii\helpers\Html::img($model->photoPath)?>
     </a>
 
     <h3><?=$model->name?></h3>

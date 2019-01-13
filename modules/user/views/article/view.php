@@ -51,6 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->userStatus;
                 }],
             'name',
+            ['attribute'=>'photo',
+                'value'=>function($data){
+                    return $data->photoPath;
+                },
+                'format' => ['image',['height'=>'200']]
+            ],
             'content:ntext',
         ],
     ]) ?>

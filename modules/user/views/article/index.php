@@ -46,6 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>function($data,$name="admin"){
                     return ModuleUser::findOne(['id'=>$data->author])->username;
                 }],
+            ['attribute'=>'photo',
+                'value'=>function($data){
+                    return $data->photoPath;
+                },
+                'format' => ['image',['width'=>'100']]
+            ],
             ['attribute'=>'status',
                 'value'=>function($data){
                     return $data->userStatus;

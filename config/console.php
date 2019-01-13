@@ -34,8 +34,8 @@ $config = [
              'migrate' => [
                 'class' => 'yii\console\controllers\MigrateController',
                 'migrationPath' => [
-                    '@yii/rbac/migrations',
                     '@app/migrations',
+                    '@yii/rbac/migrations',
                 ],
          ],
      ],

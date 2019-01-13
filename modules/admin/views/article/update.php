@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <article>
         <p>
             <span class="image right">
-                <?= yii\helpers\Html::img('/images/article/'.$model['id'].'.jpg') ?>
+                <?= yii\helpers\Html::img($model->photoPath) ?>
                 <p></p>
                 <h1><?= Html::encode($this->title) ?></h1>
                 <p></p>
