@@ -11,8 +11,8 @@ class ArticleController extends Controller
 {
     public function actionView($id)
     {
-        $article = Article::find()->where(['id'=>$id])->limit(1)->one();
-        $catName = $article->category->name;
+        $article = Article::findById($id);
+        $catName = $article->categoryName;
         return $this->render('view',compact('article','catName'));
     }
 

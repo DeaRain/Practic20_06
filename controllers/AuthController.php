@@ -6,8 +6,9 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\SignupForm;
+use app\models\forms\LoginForm;
+use app\models\forms\SignupForm;
+use app\models\services\SignupService;
 
 class AuthController extends Controller
 {
@@ -77,14 +78,11 @@ class AuthController extends Controller
     public function actionSignup($userType="user")
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    $auth = Yii::$app->authManager;
-                    if($userType=="admin") $userRole = $auth->getRole('admin');
-                    else $userRole = $auth->getRole('user');
-                    $auth->assign($userRole, $user->getId());
 
+        if ($model->load(Yii::$app->request->post())&&$model->validate()) {
+            if ($user = (new SignupService())->signupWithRBAC($model, $userType)) {
+
+                if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
             }
@@ -94,3 +92,4 @@ class AuthController extends Controller
         ]);
     }
 }
+
