@@ -40,11 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             ['attribute'=>'category_id',
                 'value'=>function($data){
-                    return \app\models\Category::findOne(['id'=>$data->category_id])->name;
+                    return \app\models\entities\Category::findOne(['id'=>$data->category_id])->name;
                 }],
             ['attribute'=>'author',
                 'value'=>function($data){
-                    return \app\models\User::findOne(['id'=>$data->author])->username;
+                    return \app\models\entities\User::findOne(['id'=>$data->author])->username;
                 }],
             ['attribute'=>'status',
                 'value'=>function($data){

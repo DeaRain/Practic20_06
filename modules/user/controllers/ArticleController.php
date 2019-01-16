@@ -1,6 +1,7 @@
 <?php
 
 namespace app\modules\user\controllers;
+use app\models\forms\ArticleForm;
 use app\models\ModuleUser;
 use app\models\services\ArticleGridService;
 use app\models\services\ProfileService;
@@ -59,10 +60,10 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
-        $temp = $this->findModel($id);
-        if ($temp->author==Yii::$app->user->getId()){
+        $article = (new ArticleGridService())->getUserArticle($id, Yii::$app->user->getId());
+        if ($article){
             return $this->render('view', [
-                'model' => $temp,
+                'model' => $article,
             ]);
         } else return $this->redirect('/user/article');
 
@@ -75,19 +76,16 @@ class ArticleController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Article();
-        if(Yii::$app->request->isPost){
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $tempName = $model->uploadPhoto();
-        }
-        if ($model->load(Yii::$app->request->post())) {
-            $model->photo = $tempName;
-            if ($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+        $form = new ArticleForm();
+        if ($form->load(Yii::$app->request->post())) {
+            $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
+            $form->photo = (new ArticleGridService())->uploadPhoto($form);
+            if ((new ArticleGridService())->save($form)){
+                return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 

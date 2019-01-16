@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'author',
                 'value'=>function($data,$name="admin"){
-                    return ModuleUser::findOne(['id'=>$data->author])->username;
+                    return \app\models\entities\User::findOne(['id'=>$data->author])->username;
                 }],
             ['attribute'=>'photo',
                 'value'=>function($data){

@@ -114,4 +114,16 @@ class Article extends \yii\db\ActiveRecord
     public function getCategoryName(){
         return $this->category->name;
     }
+
+    public static function create($category_id, $name, $content, $author, $status, $photo)
+    {
+        $article = new static();
+        $article->category_id = $category_id;
+        $article->name = $name;
+        $article->content = $content;
+        $article->author = $author;
+        $article->status = $status;
+        $article->photo = $photo;
+        return $article;
+    }
 }
