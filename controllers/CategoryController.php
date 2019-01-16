@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\Category;
+use app\models\entities\Category;
 use app\models\services\CategoryService;
 use yii\web\Controller;
 use app\models\Article;

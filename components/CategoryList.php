@@ -7,7 +7,7 @@
  */
 namespace app\components;
 
-use app\models\Category;
+use app\models\entities\Category;
 use yii\base\Widget;
 use yii\helpers\Url;
 

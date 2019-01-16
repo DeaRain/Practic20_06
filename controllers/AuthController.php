@@ -8,7 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
-use app\models\services\SignupService;
+use app\models\services\AuthService;
 
 class AuthController extends Controller
 {
@@ -59,7 +59,7 @@ class AuthController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()&& (new AuthService())->login($model)) {
             return $this->goBack();
         }
 
@@ -80,7 +80,7 @@ class AuthController extends Controller
         $model = new SignupForm();
 
         if ($model->load(Yii::$app->request->post())&&$model->validate()) {
-            if ($user = (new SignupService())->signupWithRBAC($model, $userType)) {
+            if ($user = (new AuthService())->signupWithRBAC($model, $userType)) {
 
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();

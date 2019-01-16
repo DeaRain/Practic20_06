@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\entities;
+namespace app\models\forms;
 
 use Yii;
 
@@ -17,7 +17,7 @@ use Yii;
  * @property int $created_at
  * @property int $updated_at
  */
-class ModuleUser extends \yii\db\ActiveRecord
+class ModulesUserForm extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
