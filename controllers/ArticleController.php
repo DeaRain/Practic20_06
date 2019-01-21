@@ -3,18 +3,18 @@
 namespace app\controllers;
 
 use app\models\forms\ArticleSearchForm;
+use app\models\repositories\ArticleRepository;
 use app\models\services\SearchService;
 use yii\web\Controller;
-use app\models\entities\Article;
-use app\models\entities\ArticleSearch;
 use Yii;
 
 class ArticleController extends Controller
 {
     public function actionView($id)
     {
-        $article = Article::findById($id);
+        $article = (new ArticleRepository())->findById($id);
         $catName = $article->categoryName;
+
         return $this->render('view',compact('article','catName'));
     }
 

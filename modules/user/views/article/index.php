@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use app\models\ModuleUser;
-
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -28,10 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php
-    $name="asd";
     echo
     GridView::widget([
         'dataProvider' => $dataProvider,
+
         'columns' => [
             ['attribute'=>'category_id',
                 'value'=>function($data){
@@ -40,11 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             ['attribute'=>'content',
                 'value'=>function($data){
-                    return \yii\helpers\StringHelper::truncate(strip_tags( $data->content),200,'..');
+                    return StringHelper::truncate(strip_tags( $data->content),200,'..');
                 }],
             ['attribute'=>'author',
-                'value'=>function($data,$name="admin"){
-                    return \app\models\entities\User::findOne(['id'=>$data->author])->username;
+                'value'=>function($data){
+                    return $data->user->username;
                 }],
             ['attribute'=>'photo',
                 'value'=>function($data){

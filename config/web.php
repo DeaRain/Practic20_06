@@ -6,7 +6,8 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log',
+        'app\bootstrap\SetUp'],
     'language' => 'ru-Ru',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -70,6 +71,7 @@ $config = [
                 '<controller:(category|article)>/view/<id:\d+>'=>'<controller>/view',
                 'search'=>'article/search',
                 'user' => 'user/profile/index',
+                'banned' => 'user/profile/banned',
                 '<module:(user|admin)>/<controller:(article)>/<action:(view|update|delete)>/<id:\d+>' => '<module>/<controller>/<action>',
             ],
         ],

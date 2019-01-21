@@ -14,7 +14,13 @@ class ProfileController extends Controller
 {
     public function actionIndex()
     {
-        $user = (new ProfileService())->getProfileInfo(\Yii::$app->user->getId());
+        $user = (new ProfileService())->getUserById(\Yii::$app->user->getId());
         return $this->render('index',compact('user'));
+    }
+
+    public function actionBanned()
+    {
+        $user = (new ProfileService())->getUserById(\Yii::$app->user->getId());
+        return $this->render('banned',compact('user'));
     }
 }

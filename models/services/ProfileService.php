@@ -2,24 +2,20 @@
 namespace app\models\services;
 
 use app\models\entities\User;
+use yii\base\Action;
 
 class ProfileService
 {
-    public function getProfileInfo($id)
+    public function isBanAction(Action $action)
     {
-        $thisUser = $this->getUserById($id);
-        $user = [
-            'name'=>$thisUser->username,
-            'banned'=>$this->isBanned($thisUser)
-        ];
-        return $user;
+        if($action->controller->id=="profile" && $action->id=="banned") return 1;
+        else return 0;
     }
 
-    public function getUserById($id)
+    public function isBannedById($id)
     {
-        return User::findIdentity($id);
+        return $this->isBanned($this->getUserById($id));
     }
-
 
     public function isBanned(User $user)
     {
@@ -29,8 +25,12 @@ class ProfileService
         return 0;
     }
 
-    public function isBannedById($id)
+    public function getUserById($id)
     {
-        return $this->isBanned($this->getUserById($id));
+        return User::findIdentity($id);
     }
+
+
+
+
 }

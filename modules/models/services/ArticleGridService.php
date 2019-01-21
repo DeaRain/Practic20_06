@@ -1,5 +1,5 @@
 <?php
-namespace app\models\services;
+namespace app\modules\models\services;
 
 use app\models\entities\Article;
 use app\models\forms\ArticleForm;
