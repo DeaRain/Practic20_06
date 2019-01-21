@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'status',
                 'value'=>function($data){
-                    return $data->userStatus;
+                    return $data->textStatus;
                 }],
             'name',
             ['attribute'=>'photo',

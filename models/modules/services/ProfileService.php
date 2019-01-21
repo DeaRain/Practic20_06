@@ -1,5 +1,5 @@
 <?php
-namespace app\models\services;
+namespace app\models\modules\services;
 
 use app\models\entities\User;
 use yii\base\Action;

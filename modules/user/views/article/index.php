@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'author',
                 'value'=>function($data){
-                    return $data->user->username;
+                    return $data->authorEntity->username;
                 }],
             ['attribute'=>'photo',
                 'value'=>function($data){
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             ['attribute'=>'status',
                 'value'=>function($data){
-                    return $data->userStatus;
+                    return $data->textStatus;
                 }],
             ['class' => 'yii\grid\ActionColumn'],
         ],

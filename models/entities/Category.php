@@ -15,44 +15,14 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
-    public $imageFile;
-    /**
-     * @inheritdoc
-     */
+    const DEF_PHOTO = "default.jpg";
+    const LOCATION_PATH = "uploads/categoryPhotos/";
+
     public static function tableName()
     {
         return 'category';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['name'], 'required'],
-            [['descr'], 'string'],
-            [['name'], 'string', 'max' => 255],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Название',
-            'descr' => 'Описание',
-            'imageFile' => 'Главная картинка',
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getArticles()
     {
         return $this->hasMany(Article::className(), ['category_id' => 'id']);
@@ -69,5 +39,18 @@ class Category extends \yii\db\ActiveRecord
 
     public static function getActiveArticleQuery(){
         return Article::find()->one();
+    }
+
+    public function getPhotoPath(){
+        return Yii::$app->photoStorage->getImagePath($this->photo,self::LOCATION_PATH);
+    }
+
+    public static function create($name, $descr, $photo)
+    {
+        $category = new static();
+        $category->name = $name;
+        $category->descr = $descr;
+        $category->photo = $photo;
+        return $category;
     }
 }

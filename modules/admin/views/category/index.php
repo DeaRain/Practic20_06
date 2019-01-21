@@ -26,6 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>function($data){
                     return \yii\helpers\StringHelper::truncate(strip_tags( $data->descr),200,'..');
                 }],
+            ['attribute'=>'photo',
+                'value'=>function($data){
+                    return $data->photoPath;
+                },
+                'format' => ['image',['width'=>'100']]
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -2,7 +2,7 @@
 
 namespace app\modules\user;
 
-use app\models\services\ProfileService;
+use app\models\modules\services\ProfileService;
 use yii\filters\AccessControl;
 
 

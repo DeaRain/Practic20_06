@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\models\forms;
+namespace app\models\modules\forms;
 
 use Yii;
 
@@ -19,14 +19,6 @@ use Yii;
  */
 class ModulesUserForm extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'user';
-    }
-
     /**
      * @inheritdoc
      */
@@ -59,10 +51,5 @@ class ModulesUserForm extends \yii\db\ActiveRecord
             'created_at' => 'Дата регистрации',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    public function getArticles()
-    {
-        return $this->hasMany(Article::className(), ['author' => 'id']);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\models\services;
+namespace app\models\modules\services;
 
 use app\models\entities\Article;
 use app\models\forms\ArticleForm;
@@ -11,15 +11,14 @@ use yii\data\ActiveDataProvider;
 
 class ArticleGridService
 {
-    const DEFAULT_LOGO_PATH = "default.jpg";
     public function getQueryFilter($authorId, $active, $onCheck)
     {
         $queryFilter = ['author'=>$authorId];
         if($active=="ok"&&$onCheck=="ok") {
         } elseif ($active=="ok") {
-            $queryFilter = ['status'=>1,'author'=>Yii::$app->user->getId()];
+            $queryFilter = ['status'=>1,'author'=>$authorId];
         } elseif ($onCheck=="ok") {
-            $queryFilter = ['status'=>0,'author'=>Yii::$app->user->getId()];
+            $queryFilter = ['status'=>0,'author'=>$authorId];
         }
         return $queryFilter;
     }
@@ -34,16 +33,7 @@ class ArticleGridService
         ]);
     }
 
-    public function uploadPhoto(ArticleForm $form){
-
-        if($form->validate('imageFile')) {
-            return $photoName = Yii::$app->photoStorage->saveImage($form->imageFile);
-        } else {
-            return $photoName = ArticleGridService::DEFAULT_LOGO_PATH;
-        }
-    }
-
-    public function getArticleForm(Article $model){
+    public function EntityToForm(Article $model){
         $form = new ArticleForm();
         $form->category_id = $model->category_id;
         $form->name = $model->name;
@@ -54,6 +44,33 @@ class ArticleGridService
         return $form;
     }
 
+    public function save(ArticleForm $form){
+
+       $this->photoTransform($form);
+
+       $article = Article::create($form->category_id,
+           $form->name,
+           $form->content,
+           $form->author,
+           0,
+           $form->photo
+       );
+       return $article->save();
+    }
+
+    public function update(Article $model,ArticleForm $form){
+
+        $this->photoTransform($form);
+
+        $model->category_id = $form->category_id;
+        $model->name = $form->name;
+        $model->content = $form->content;
+        $model->author = $form->author;
+        $model->status = $form->status;
+        $model->photo = $form->photo;
+
+        return $model->save();
+    }
 
     public function getUserArticle($articleId, $userId){
         $article = $this->getArticle($articleId);
@@ -68,26 +85,11 @@ class ArticleGridService
         }
     }
 
-    public function save(ArticleForm $form){
-       $article = Article::create($form->category_id,
-           $form->name,
-           $form->content,
-           $form->author,
-           0,
-           $form->photo
-       );
-       return $article->save();
-    }
-
-    public function update(Article $model,ArticleForm $form){
-
-        $model->category_id = $form->category_id;
-        $model->name = $form->name;
-        $model->content = $form->content;
-        $model->author = $form->author;
-        $model->status = $form->status;
-        $model->photo = $form->photo;
-
-        return $model->save();
+    private function photoTransform(ArticleForm $form){
+        if($form->validate('imageFile')) {
+            $form->photo = Yii::$app->photoStorage->saveImage($form->imageFile, Article::LOCATION_PATH);
+        } else {
+            $form->photo = Article::DEF_PHOTO;
+        }
     }
 }

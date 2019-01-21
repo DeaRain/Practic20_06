@@ -7,7 +7,7 @@
  */
 namespace app\modules\user\controllers;
 
-use app\models\services\ProfileService;
+use app\models\modules\services\ProfileService;
 use yii\web\Controller;
 
 class ProfileController extends Controller

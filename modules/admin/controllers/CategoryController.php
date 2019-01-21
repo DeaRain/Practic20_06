@@ -2,8 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\modules\forms\CategoryForm;
+use app\models\modules\services\CategoryGridService;
 use Yii;
-use app\models\Category;
+use app\models\entities\Category;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -19,6 +21,17 @@ class CategoryController extends Controller
     /**
      * @inheritdoc
      */
+
+    private $categoryGridService;
+
+    public function __construct($id, $module, CategoryGridService $categoryGridService, array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->categoryGridService = $categoryGridService;
+    }
+
+
+
     public function behaviors()
     {
         return [
@@ -30,12 +43,6 @@ class CategoryController extends Controller
             ],
         ];
     }
-
-    /**
-     * Lists all Category models.
-     * @return mixed
-     */
-
 
 
 
@@ -70,18 +77,16 @@ class CategoryController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Category();
+        $form = new CategoryForm();
+        if ($form->load(Yii::$app->request->post())) {
+            $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if (is_object($model->imageFile)) {
-                $model->imageFile->saveAs('images/all/' . $model->id . '.jpg');
+            if ($this->categoryGridService->save($form)){
+                return $this->redirect(['index']);
             }
-            return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
@@ -95,17 +100,17 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if (is_object($model->imageFile)) {
-                $model->imageFile->saveAs('images/all/' . $model->id . '.jpg');
+        $form = $this->categoryGridService->EntityToForm($model);
+        if(Yii::$app->request->isPost) {
+            if ($form->load(Yii::$app->request->post())) {
+                $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
+                if ($this->categoryGridService->update($model,$form)) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
-            return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('update', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
