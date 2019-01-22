@@ -2,6 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\forms\ArticleForm;
+use app\models\modules\forms\ArticleAdminForm;
+use app\models\modules\services\ArticleGridService;
+use app\models\repositories\ArticleRepository;
 use Yii;
 use app\models\Article;
 use yii\data\ActiveDataProvider;
@@ -15,9 +19,16 @@ use yii\web\UploadedFile;
  */
 class ArticleController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
+
+    private $articleRepository;
+    private $articleGridService;
+
+    public function __construct($id, $module, ArticleRepository $articleRepository, ArticleGridService $articleGridService, array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->articleRepository = $articleRepository;
+        $this->articleGridService = $articleGridService;
+    }
     public function behaviors()
     {
         return [
@@ -37,7 +48,7 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Article::find()->with('category')->with('user'),
+            'query' => $this->articleRepository->getQueryWith(['category', 'user']),
         ]);
 
         return $this->render('index', [
@@ -54,7 +65,7 @@ class ArticleController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->articleRepository->findModel($id),
         ]);
     }
 
@@ -65,19 +76,15 @@ class ArticleController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Article();
-        if(Yii::$app->request->isPost){
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $tempName = $model->uploadPhoto();
-        }
-        if ($model->load(Yii::$app->request->post())) {
-        $model->photo = $tempName;
-        if ($model->save()){
-            return $this->redirect(['view', 'id' => $model->id]);
+        $form = new ArticleForm();
+        if ($form->load(Yii::$app->request->post())) {
+            $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
+            if ($this->articleGridService->save($form)){
+                return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
@@ -90,48 +97,30 @@ class ArticleController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        if(Yii::$app->request->isPost){
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $tempName = $model->uploadPhoto();
-        }
-        if ($model->load(Yii::$app->request->post())) {
-            $model->photo = $tempName;
-            if ($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+        $model = $this->articleRepository->findModel($id);
+        if($model){
+            $form = $this->articleGridService->EntityToForm($model);
+            if(Yii::$app->request->isPost) {
+                if ($form->load(Yii::$app->request->post())) {
+                    $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
+                    if ($this->articleGridService->update($model,$form)) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
             }
+            return $this->render('update', [
+                'model' => $form,
+            ]);
+        } else {
+            return $this->redirect('/admin/article');
         }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
-    /**
-     * Deletes an existing Article model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->articleRepository->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Article model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Article the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Article::findOne($id)) !== null) {
-            return $model;
-        }
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 }

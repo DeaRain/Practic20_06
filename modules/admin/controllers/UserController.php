@@ -2,6 +2,13 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\entities\User;
+use app\models\modules\forms\UserCreateForm;
+use app\models\modules\forms\UserForm;
+use app\models\modules\forms\UserUpdateForm;
+use app\models\modules\services\UserGridService;
+use app\models\repositories\RBACRepository;
+use app\models\repositories\UserRepository;
 use Yii;
 use app\models\ModuleUser;
 use yii\data\ActiveDataProvider;
@@ -17,6 +24,17 @@ class UserController extends Controller
     /**
      * @inheritdoc
      */
+
+    private $userRepository;
+    private $userGridService;
+
+    public function __construct($id, $module, UserRepository $userRepository, UserGridService $userGridService, array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->userRepository = $userRepository;
+        $this->userGridService = $userGridService;
+    }
+
     public function behaviors()
     {
         return [
@@ -35,8 +53,9 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+
         $dataProvider = new ActiveDataProvider([
-            'query' => ModuleUser::find(),
+            'query' => $this->userRepository->getCleanQuery()
         ]);
 
         return $this->render('index', [
@@ -53,7 +72,7 @@ class UserController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->userRepository->findModel($id),
         ]);
     }
 
@@ -64,35 +83,28 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $form = new UserCreateForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($form->load(Yii::$app->request->post()) && $this->userGridService->save($form)) {
+            return $this->redirect(['view', 'id' => $form->id]);
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
-    /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->password_reset_token=="") $model->password_reset_token=null;
-            if ($model->save()) {
+        $model = $this->userRepository->findModel($id);
+        $form = $this->userGridService->EntityToForm($model);
+        if ($form->load(Yii::$app->request->post())) {
+            if ($this->userGridService->update($model, $form)) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
         return $this->render('update', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
@@ -105,24 +117,9 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->userRepository->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = ModuleUser::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 }

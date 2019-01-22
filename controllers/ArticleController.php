@@ -13,7 +13,7 @@ class ArticleController extends Controller
     public function actionView($id)
     {
         $article = (new ArticleRepository())->findById($id);
-        $catName = $article->categoryName;
+        $catName = $article->category->name;
 
         return $this->render('view',compact('article','catName'));
     }

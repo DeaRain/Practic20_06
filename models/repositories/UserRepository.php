@@ -2,6 +2,7 @@
 namespace app\models\repositories;
 
 use app\models\entities\User;
+use yii\web\NotFoundHttpException;
 
 class UserRepository
 {
@@ -15,11 +16,24 @@ class UserRepository
         return $user;
     }
 
+    public function getCleanQuery()
+    {
+        return User::find();
+    }
+
     public function findById($id)
     {
         return User::findIdentity($id);
     }
 
+    public function findModel($id)
+    {
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('User not found.');
+    }
 
     public function isBanned(User $user)
     {

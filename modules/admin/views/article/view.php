@@ -37,11 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             ['attribute'=>'category_id',
                 'value'=>function($data){
-                    return \app\models\Category::findOne(['id'=>$data->category_id])->name;
+                    return $data->category->name;
                 }],
             ['attribute'=>'author',
                 'value'=>function($data){
-                    return \app\models\User::findOne(['id'=>$data->author])->username;
+                    return $data->user->username;
                 }],
             ['attribute'=>'status',
                 'value'=>function($data){
@@ -55,7 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['image',['height'=>'200']]
                 ],
             'content:ntext',
-
         ],
     ]) ?>
 

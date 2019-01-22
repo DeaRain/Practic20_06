@@ -24,16 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'username',
-            ['attribute'=>'auth_key',
-                'value'=>function($data){
-                    return \yii\helpers\StringHelper::truncate(strip_tags( $data->auth_key),10,'..');
-                }],
-            ['attribute'=>'password_hash',
-                'value'=>function($data){
-                    return \yii\helpers\StringHelper::truncate(strip_tags( $data->password_hash),10,'..');
-                }],
-           // 'password_reset_token',
             'email:email',
+            ['attribute'=>'role',
+                'value'=>function($data){
+                    return (new \app\models\repositories\RBACRepository())->getUserRole($data->id);
+                }],
             ['attribute'=>'status',
                 'value'=>function($data){
                     if($data->status==1){ return 'Заблокирован';}

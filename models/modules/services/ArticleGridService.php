@@ -6,6 +6,7 @@ use app\models\forms\ArticleForm;
 use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
 use app\models\entities\User;
+use app\models\modules\forms\ArticleAdminForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -52,7 +53,7 @@ class ArticleGridService
            $form->name,
            $form->content,
            $form->author,
-           0,
+           $form->status,
            $form->photo
        );
        return $article->save();
@@ -85,7 +86,7 @@ class ArticleGridService
         }
     }
 
-    private function photoTransform(ArticleForm $form){
+    private function photoTransform($form){
         if($form->validate('imageFile')) {
             $form->photo = Yii::$app->photoStorage->saveImage($form->imageFile, Article::LOCATION_PATH);
         } else {

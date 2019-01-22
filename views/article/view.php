@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </header>
 
     <span class="image main">
-        <?= yii\helpers\Html::img($article->photoPath) ?>
+        <?= yii\helpers\Html::img($article->photoPath)?>
     </span>
 
     <?= $article['content']?>

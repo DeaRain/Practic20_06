@@ -16,9 +16,9 @@ mihaildev\elfinder\Assets::noConflict($this);
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'imageFile')->fileInput() ?>
-    <?= $form->field($model, 'category_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Category::find()->all(),'id','name')) ?>
+    <?= $form->field($model, 'category_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\entities\Category::find()->all(),'id','name')) ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'author')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\User::find()->all(),'id','username')) ?>
+    <?= $form->field($model, 'author')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\entities\User::find()->all(),'id','username')) ?>
     <?= $form->field($model, 'status')->dropDownList([
         '1' => 'Активный',
         '0' => 'Отключен',
