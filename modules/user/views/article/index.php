@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
-use app\models\ModuleUser;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */

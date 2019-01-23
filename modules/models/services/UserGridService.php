@@ -8,7 +8,8 @@ use app\models\repositories\RBACRepository;
 
 class UserGridService
 {
-    public function EntityToForm(User $model){
+    public function EntityToForm(User $model)
+    {
         $form = new UserUpdateForm();
         $form->username = $model->username;
         $form->auth_key = $model->auth_key;
@@ -22,8 +23,8 @@ class UserGridService
         return $form;
     }
 
-    public function save(UserCreateForm $form){
-
+    public function save(UserCreateForm $form)
+    {
         $user = User::create($form->username,
             $form->email,
             $form->password);
@@ -31,12 +32,11 @@ class UserGridService
         $result = $user->save();
         $form->id = $user->id;
         (new RBACRepository())->assignNewUserRole($user, $form->role);
-
        return $result;
     }
 
-    public function update(User $model,UserUpdateForm $form){
-
+    public function update(User $model, UserUpdateForm $form)
+    {
         $model->username = $form->username;
         $model->auth_key = $form->auth_key;
         $model->password_hash = $form->password_hash;
@@ -51,5 +51,4 @@ class UserGridService
 
         return $model->save();
     }
-
 }

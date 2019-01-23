@@ -33,5 +33,4 @@ class SearchService
 
         return $dataProvider;
     }
-
 }

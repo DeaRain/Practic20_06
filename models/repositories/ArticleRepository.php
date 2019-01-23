@@ -23,6 +23,10 @@ class ArticleRepository
     {
         return Article::find()->with($with)->where($where);
     }
+    public function getQueryWhere(array $where)
+    {
+        return Article::find()->where($where);
+    }
     public function getQueryWith(array $with)
     {
         return Article::find()->with($with);

@@ -17,9 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Создать новую статью', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?=
-
-    GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             'id',

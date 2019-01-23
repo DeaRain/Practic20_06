@@ -30,5 +30,4 @@ class UserRepository
         }
         throw new NotFoundHttpException('User not found.');
     }
-
 }

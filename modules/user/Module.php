@@ -5,7 +5,6 @@ namespace app\modules\user;
 use app\modules\models\services\ProfileService;
 use yii\filters\AccessControl;
 
-
 /**
  * user module definition class
  */
@@ -44,11 +43,11 @@ class Module extends \yii\base\Module
 
     public function beforeAction($action)
     {
-        if((new ProfileService())->isBannedById($this->user->getId())) {
+        if ((new ProfileService())->isBannedById($this->user->getId())) {
             if(!(new ProfileService())->isBanPageAction($action)) {
                 return \Yii::$app->response->redirect(['/user/profile/banned']);
             }
-        } elseif((new ProfileService())->isBanPageAction($action)) {
+        } elseif ((new ProfileService())->isBanPageAction($action)) {
             return \Yii::$app->response->redirect(['/user/profile/index']);
         }
         return parent::beforeAction($action);

@@ -11,15 +11,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * UserController implements the CRUD actions for User model.
- */
 class UserController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-
     private $userRepository;
     private $userGridService;
 
@@ -42,10 +35,6 @@ class UserController extends Controller
         ];
     }
 
-    /**
-     * Lists all User models.
-     * @return mixed
-     */
     public function actionIndex()
     {
 
@@ -58,12 +47,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single User model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -71,11 +54,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $form = new UserCreateForm();
@@ -103,13 +81,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->userRepository->findModel($id)->delete();

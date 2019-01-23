@@ -2,9 +2,8 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
-/* @var $model app\modules\admin\models\User */
+/* @var $model app\modules\models\forms\UserCreateForm */
 
 $this->title = 'Create User';
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];

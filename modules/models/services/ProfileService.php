@@ -9,8 +9,11 @@ class ProfileService
 {
     public function isBanPageAction(Action $action)
     {
-        if($action->controller->id=="profile" && $action->id=="banned") return 1;
-        else return 0;
+        if ($action->controller->id == "profile" && $action->id == "banned") {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     public function isBannedById($id)
@@ -20,7 +23,7 @@ class ProfileService
 
     public function isBanned(User $user)
     {
-        if($user->status==1) {
+        if ($user->status == 1) {
             return 1;
         }
         return 0;
@@ -40,5 +43,4 @@ class ProfileService
                 break;
         }
     }
-
 }

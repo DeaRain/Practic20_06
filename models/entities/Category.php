@@ -10,14 +10,11 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property string $descr
- *
+ * @property string $photo
  * @property Article[] $articles
  */
 class Category extends \yii\db\ActiveRecord
 {
-    const DEF_PHOTO = "default.jpg";
-    const LOCATION_PATH = "uploads/categoryPhotos/";
-
     public static function tableName()
     {
         return 'category';
@@ -42,7 +39,7 @@ class Category extends \yii\db\ActiveRecord
     }
 
     public function getPhotoPath(){
-        return Yii::$app->photoStorage->getImagePath($this->photo,self::LOCATION_PATH);
+        return Yii::$app->photoStorage->getImagePath($this->photo, getenv('CATEGORY_LOCATION_PATH'));
     }
 
     public static function create($name, $descr, $photo)

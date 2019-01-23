@@ -14,18 +14,11 @@ use Yii;
  * @property int $author
  * @property int $status
  * @property string $photo
- * @property User $author0
  * @property Category $category
+ * @property User $user
  */
 class Article extends \yii\db\ActiveRecord
 {
-
-    const DEF_PHOTO = "default.jpg";
-    const LOCATION_PATH = "uploads/articlePhotos/";
-
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'article';
@@ -33,7 +26,7 @@ class Article extends \yii\db\ActiveRecord
 
     public function getTextStatus()
     {
-        if($this->status){
+        if ($this->status) {
             return 'Активен';
         } else {
             return 'На модерации';
@@ -68,11 +61,10 @@ class Article extends \yii\db\ActiveRecord
     }
 
     public function getPhotoPath(){
-        return Yii::$app->photoStorage->getImagePath($this->photo,self::LOCATION_PATH);
+        return Yii::$app->photoStorage->getImagePath($this->photo, getenv('ARTICLE_LOCATION_PATH'));
     }
 
     public static function findById($id){
         return self::find()->where(['id'=>$id])->limit(1)->one();
     }
-
 }

@@ -2,11 +2,7 @@
 namespace app\models\forms;
 
 use yii\base\Model;
-use app\models\entities\User;
 
-/**
- * Signup form
- */
 class SignupForm extends Model
 {
     public $username;

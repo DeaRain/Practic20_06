@@ -2,11 +2,9 @@
 
 namespace app\controllers;
 
-use app\models\entities\Category;
+use app\models\repositories\ArticleRepository;
 use app\models\repositories\CategoryRepository;
-use app\models\services\CategoryService;
 use yii\web\Controller;
-use app\models\Article;
 use yii\data\ActiveDataProvider;
 
 class CategoryController extends Controller
@@ -19,9 +17,18 @@ class CategoryController extends Controller
     public function actionView($id)
     {
         $category = (new CategoryRepository())->findModel($id);
-        $provider = (new CategoryService())->getProvider($id,4);
+        $query = (new ArticleRepository())->getQueryWhere(['category_id'=>$id,'status'=>1]);
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 4,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+        ]);
         return $this->render('view',compact('provider','category'));
     }
-
-
 }

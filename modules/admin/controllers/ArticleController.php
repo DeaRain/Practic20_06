@@ -12,9 +12,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
-/**
- * ArticleController implements the CRUD actions for Article model.
- */
 class ArticleController extends Controller
 {
 
@@ -39,10 +36,6 @@ class ArticleController extends Controller
         ];
     }
 
-    /**
-     * Lists all Article models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
@@ -54,12 +47,6 @@ class ArticleController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Article model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -67,11 +54,6 @@ class ArticleController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Article model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $form = new ArticleForm();
@@ -86,13 +68,6 @@ class ArticleController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Article model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->articleRepository->findModel($id);

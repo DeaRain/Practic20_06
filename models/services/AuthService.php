@@ -12,7 +12,7 @@ class AuthService
 {
     public function signupWithRBAC(SignupForm $form, $userType)
     {
-        if($user =  $this->signup($form)){
+        if ($user = $this->signup($form)) {
             (new RBACRepository())->assignNewUserRole($user, $userType);
             return $user;
         }

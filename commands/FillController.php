@@ -9,10 +9,10 @@ namespace app\commands;
 
 use yii\console\Controller;
 use yii\console\ExitCode;
-use app\models\Article;
-use app\models\Category;
+use app\models\entities\Article;
+use app\models\entities\Category;
 use Yii;
-use app\models\User;
+use app\models\entities\User;
 
 class FillController extends Controller
 {

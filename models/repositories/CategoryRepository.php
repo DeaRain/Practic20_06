@@ -6,7 +6,6 @@ use yii\web\NotFoundHttpException;
 
 class CategoryRepository
 {
-
     public function getCleanQuery()
     {
         return Category::find();
@@ -24,5 +23,4 @@ class CategoryRepository
         }
         throw new NotFoundHttpException('The category does not exist.');
     }
-
 }

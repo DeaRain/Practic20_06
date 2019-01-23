@@ -5,9 +5,6 @@ use yii\base\Model;
 use app\models\entities\User;
 use app\models\entities\Category;
 
-/**
- * Login form
- */
 class ArticleForm extends Model
 {
     public $id;

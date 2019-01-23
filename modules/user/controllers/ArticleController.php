@@ -12,9 +12,6 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
-/**
- * ArticleController implements the CRUD actions for Article model.
- */
 class ArticleController extends Controller
 {
     private $user;
@@ -41,11 +38,11 @@ class ArticleController extends Controller
         ];
     }
 
-    public function actionIndex($active=false,$onCheck=false)
+    public function actionIndex($active = false, $onCheck = false)
     {
-        $queryFilter = $this->articleGridService->getQueryFilter($this->user->getId(),$active,$onCheck);
+        $queryFilter = $this->articleGridService->getQueryFilter($this->user->getId(), $active, $onCheck);
         $dataProvider = new ActiveDataProvider([
-            'query' => (new ArticleRepository())->getQueryWithAndWhere(["category"],$queryFilter),
+            'query' => (new ArticleRepository())->getQueryWithAndWhere(["category"], $queryFilter),
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -56,7 +53,7 @@ class ArticleController extends Controller
     public function actionView($id)
     {
         $article = $this->articleGridService->getUserArticle($id, $this->user->getId());
-        if ($article){
+        if ($article) {
             return $this->render('view', [
                 'model' => $article,
             ]);
@@ -80,7 +77,7 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->articleGridService->getUserArticle($id,$this->user->getId());
-        if($model){
+        if ($model) {
             $form = $this->articleGridService->EntityToForm($model);
             if(Yii::$app->request->isPost) {
                 if ($form->load(Yii::$app->request->post())) {
@@ -101,7 +98,7 @@ class ArticleController extends Controller
     public function actionDelete($id)
     {
         $model = $this->articleGridService->getUserArticle($id,$this->user->getId());
-        if($model){
+        if( $model ){
             $model->delete();
             return $this->redirect(['index']);
         } else return $this->redirect('/user/article');

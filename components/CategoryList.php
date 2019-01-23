@@ -11,8 +11,8 @@ use app\models\entities\Category;
 use yii\base\Widget;
 use yii\helpers\Url;
 
-class CategoryList extends Widget{
-
+class CategoryList extends Widget
+{
     public $title;
     public $limit;
 
@@ -29,18 +29,17 @@ class CategoryList extends Widget{
 
     public function run()
     {
-        $title ='<header class="major"><h2>'.$this->title.'</h2> </header>';
+        $title ='<header class="major"><h2>' . $this->title . '</h2> </header>';
 
         $content = '<ul>';
         $categoryes = Category::find()->limit($this->limit)->all();
-        foreach ($categoryes as $category){
-            $content.= '<li><a href='.Url::to(['/category/view','id'=>$category['id']]). '>'.$category['name'].'</a></li>';
+        foreach ($categoryes as $category) {
+            $content.= '<li><a href=' . Url::to(['/category/view','id'=>$category['id']]). '>'.$category['name'].'</a></li>';
         }
         if(count($categoryes)==$this->limit){
-            $content.= '<li><a href='.Url::to(['/category/category']). ' style="color:#00b027" >Посмотреть другие категории..</a></li>';
+            $content.= '<li><a href=' . Url::to(['/category/category']) . ' style="color:#00b027">Посмотреть другие категории..</a></li>';
         }
-
-        $content = $title. $content. '</ul>';
+        $content = $title . $content . '</ul>';
         return $content;
     }
 }

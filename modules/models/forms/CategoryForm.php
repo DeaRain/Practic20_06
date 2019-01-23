@@ -2,18 +2,8 @@
 
 namespace app\modules\models\forms;
 
-use Yii;
 use yii\base\Model;
 
-/**
- * This is the model class for table "category".
- *
- * @property int $id
- * @property string $name
- * @property string $descr
- *
- * @property Article[] $articles
- */
 class CategoryForm extends Model
 {
     public $imageFile;
@@ -31,9 +21,6 @@ class CategoryForm extends Model
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -43,5 +30,4 @@ class CategoryForm extends Model
             'imageFile' => 'Главная картинка',
         ];
     }
-
 }

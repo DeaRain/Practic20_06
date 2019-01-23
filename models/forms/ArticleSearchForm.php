@@ -2,13 +2,8 @@
 
 namespace app\models\forms;
 
-use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
 
-/**
- * ArticleSearch represents the model behind the search form of `app\models\Article`.
- */
 class ArticleSearchForm extends Model
 {
     public $name;

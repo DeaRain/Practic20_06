@@ -2,7 +2,6 @@
 
 namespace app\modules\models\forms;
 
-use Yii;
 use yii\base\Model;
 
 class UserCreateForm extends Model
@@ -31,9 +30,6 @@ class UserCreateForm extends Model
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -44,5 +40,4 @@ class UserCreateForm extends Model
             'role' => 'Роль',
         ];
     }
-
 }

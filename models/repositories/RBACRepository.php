@@ -2,7 +2,6 @@
 namespace app\models\repositories;
 
 use app\models\entities\User;
-use yii\web\NotFoundHttpException;
 
 class RBACRepository
 {
@@ -15,7 +14,7 @@ class RBACRepository
 
     public function assignNewUserRole(User $user, $role)
     {
-        if($role=="admin") {
+        if ($role == "admin") {
             $userRole = $this->auth->getRole('admin');
         } else {
             $userRole = $this->auth->getRole('user');
@@ -31,10 +30,10 @@ class RBACRepository
 
     public function getUserRole($id)
     {
-        if(isset($this->auth->getRolesByUser($id)['admin'])){
+        if (isset($this->auth->getRolesByUser($id)['admin'])) {
             return "admin";
         }
-        if(isset($this->auth->getRolesByUser($id)['user'])){
+        if (isset($this->auth->getRolesByUser($id)['user'])) {
             return "user";
         }
         return "Role not Found";

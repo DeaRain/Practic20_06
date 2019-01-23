@@ -8,7 +8,7 @@ use mihaildev\elfinder\ElFinder;
 mihaildev\elfinder\Assets::noConflict($this);
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\admin\models\Article */
+/* @var $model app\modules\models\forms\ArticleForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
