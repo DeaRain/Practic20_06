@@ -2,15 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\entities\User;
-use app\models\modules\forms\UserCreateForm;
-use app\models\modules\forms\UserForm;
-use app\models\modules\forms\UserUpdateForm;
-use app\models\modules\services\UserGridService;
-use app\models\repositories\RBACRepository;
+use app\modules\models\forms\UserCreateForm;
+use app\modules\models\services\UserGridService;
 use app\models\repositories\UserRepository;
 use Yii;
-use app\models\ModuleUser;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -85,7 +80,7 @@ class UserController extends Controller
     {
         $form = new UserCreateForm();
 
-        if ($form->load(Yii::$app->request->post()) && $this->userGridService->save($form)) {
+        if ($form->load(Yii::$app->request->post()) && $form->validate() && $this->userGridService->save($form)) {
             return $this->redirect(['view', 'id' => $form->id]);
         }
 
@@ -99,10 +94,8 @@ class UserController extends Controller
         $model = $this->userRepository->findModel($id);
         $form = $this->userGridService->EntityToForm($model);
         if ($form->load(Yii::$app->request->post())) {
-            if ($this->userGridService->update($model, $form)) {
+            if ($form->validate() && $this->userGridService->update($model, $form)) {
                 return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                echo "123";die;
             }
         }
         return $this->render('update', [

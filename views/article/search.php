@@ -16,27 +16,38 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>Показано <b>1-<?=$dataProvider->count?></b> из <b><?=$dataProvider->totalCount?></b>
-    <section>
+
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
             'itemView' => '..\_itemView\_post',
             'options' => [
                 'class' => 'posts'
             ],
-            'layout' => "{items}</div><div align=\"center\">\n{pager}",
+            'layout' => "{items}",
             'itemOptions' => [
                 'tag' => null,
             ],
-            'pager' => [
+            'emptyText' => 'Ничего не найдено',
+            'emptyTextOptions' => [
+                'tag' => 'article'
+            ],
+
+        ]); ?>
+
+    <div align="center">
+            <?= \yii\widgets\LinkPager::widget([
+                'pagination' => $dataProvider->pagination,
                 'nextPageLabel' => 'Следующая',
                 'prevPageLabel' => 'Предыдущая',
                 'maxButtonCount' => 5,
                 'options' => [
-                    'class' => 'pagination'
+                    'class' => 'pagination',
                 ],
-            ],
-        ]); ?>
-    </section>
+            ]); ?>
+    </div>
+
+
+<!--    </section>-->
 
 
 

@@ -17,7 +17,7 @@ mihaildev\elfinder\Assets::noConflict($this);
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'imageFile')->fileInput() ?>
-    <?= $form->field($model, 'category_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\entities\Category::find()->all(),'id','name')) ?>
+    <?= $form->field($model, 'category_id')->dropDownList(\yii\helpers\ArrayHelper::map((new \app\models\repositories\CategoryRepository())->getAllQuery(),'id','name')) ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'author')->hiddenInput(['value'=>Yii::$app->user->getId()]) ->label(''); ?>
     <?= $form->field($model, 'content')->widget(CKEditor::className(),[

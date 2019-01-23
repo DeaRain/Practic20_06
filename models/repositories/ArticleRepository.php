@@ -2,14 +2,13 @@
 namespace app\models\repositories;
 
 use app\models\entities\Article;
-use app\models\entities\User;
 use yii\web\NotFoundHttpException;
 
 class ArticleRepository
 {
-    public function findById($id)
+    public function getCleanQuery()
     {
-        return Article::find()->where(['id'=>$id])->limit(1)->one();
+        return Article::find();
     }
 
     public function findModel($id)
@@ -19,6 +18,7 @@ class ArticleRepository
         }
         throw new NotFoundHttpException('The article does not exist.');
     }
+
     public function getQueryWithAndWhere(array $with,array $where)
     {
         return Article::find()->with($with)->where($where);

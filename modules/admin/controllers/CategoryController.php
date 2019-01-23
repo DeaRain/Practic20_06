@@ -2,10 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\modules\forms\CategoryForm;
-use app\models\modules\services\CategoryGridService;
+use app\models\repositories\CategoryRepository;
+use app\modules\models\forms\CategoryForm;
+use app\modules\models\services\CategoryGridService;
 use Yii;
-use app\models\entities\Category;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -49,7 +49,7 @@ class CategoryController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Category::find(),
+            'query' => (new CategoryRepository())->getCleanQuery(),
         ]);
 
         return $this->render('index', [
@@ -66,7 +66,7 @@ class CategoryController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => (new CategoryRepository())->findModel($id),
         ]);
     }
 
@@ -81,7 +81,7 @@ class CategoryController extends Controller
         if ($form->load(Yii::$app->request->post())) {
             $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
 
-            if ($this->categoryGridService->save($form)){
+            if ($form->validate() && $this->categoryGridService->save($form)){
                 return $this->redirect(['index']);
             }
         }
@@ -99,12 +99,12 @@ class CategoryController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = (new CategoryRepository())->findModel($id);
         $form = $this->categoryGridService->EntityToForm($model);
         if(Yii::$app->request->isPost) {
             if ($form->load(Yii::$app->request->post())) {
                 $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
-                if ($this->categoryGridService->update($model,$form)) {
+                if ($form->validate() && $this->categoryGridService->update($model,$form)) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -123,7 +123,7 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        (new CategoryRepository())->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -135,11 +135,4 @@ class CategoryController extends Controller
      * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
-        if (($model = Category::findOne($id)) !== null) {
-            return $model;
-        }
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 }

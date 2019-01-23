@@ -2,12 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\forms\ArticleForm;
-use app\models\modules\forms\ArticleAdminForm;
-use app\models\modules\services\ArticleGridService;
+use app\modules\models\forms\ArticleForm;
+use app\modules\models\services\ArticleGridService;
 use app\models\repositories\ArticleRepository;
 use Yii;
-use app\models\Article;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -79,7 +77,7 @@ class ArticleController extends Controller
         $form = new ArticleForm();
         if ($form->load(Yii::$app->request->post())) {
             $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
-            if ($this->articleGridService->save($form)){
+            if ($form->validate() && $this->articleGridService->save($form)){
                 return $this->redirect(['index']);
             }
         }
@@ -103,7 +101,7 @@ class ArticleController extends Controller
             if(Yii::$app->request->isPost) {
                 if ($form->load(Yii::$app->request->post())) {
                     $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
-                    if ($this->articleGridService->update($model,$form)) {
+                    if ($form->validate() && $this->articleGridService->update($model,$form)) {
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 }

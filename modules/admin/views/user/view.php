@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             ['attribute'=>'status',
                 'value'=>function($data){
-        return (new \app\models\modules\services\ProfileService())->userStatus($data);
+        return (new \app\modules\models\services\ProfileService())->userStatus($data);
                 }],
             'created_at',
             'updated_at',

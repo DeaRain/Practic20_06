@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'status',
                 'value'=>function($data){
-                    return (new \app\models\modules\services\ProfileService())->userStatus($data);
+                    return (new \app\modules\models\services\ProfileService())->userStatus($data);
                 }],
             ['attribute'=>'created_at',
                 'value'=>function($data){

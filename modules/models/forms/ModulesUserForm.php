@@ -1,27 +1,31 @@
 <?php
 
-namespace app\models\modules\forms;
+namespace app\modules\models\forms;
 
 use Yii;
-use yii\base\Model;
 
-class UserUpdateForm extends Model
+/**
+ * This is the model class for table "user".
+ *
+ * @property int $id
+ * @property string $username
+ * @property string $auth_key
+ * @property string $password_hash
+ * @property string $password_reset_token
+ * @property string $email
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
+ */
+class ModulesUserForm extends \yii\db\ActiveRecord
 {
-    public $id;
-    public $username;
-    public $auth_key;
-    public $password_hash;
-    public $password_reset_token;
-    public $email;
-    public $status;
-    public $created_at;
-    public $updated_at;
-    public $role;
-
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at','role'], 'required'],
+            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
@@ -46,8 +50,6 @@ class UserUpdateForm extends Model
             'status' => 'Статус',
             'created_at' => 'Дата регистрации',
             'updated_at' => 'Updated At',
-            'role' => 'Роль',
         ];
     }
-
 }

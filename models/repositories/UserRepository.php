@@ -6,26 +6,15 @@ use yii\web\NotFoundHttpException;
 
 class UserRepository
 {
-    public function getProfileInfo($id)
-    {
-        $thisUser = $this->findById($id);
-        $user = [
-            'name'=>$thisUser->username,
-            'banned'=>$this->isBanned($thisUser)
-        ];
-        return $user;
-    }
-
     public function getCleanQuery()
     {
         return User::find();
     }
 
-    public function findById($id)
+    public function getAllQuery()
     {
-        return User::findIdentity($id);
+        return User::find()->all();
     }
-
     public function findModel($id)
     {
         if (($model = User::findOne($id)) !== null) {
@@ -42,16 +31,4 @@ class UserRepository
         throw new NotFoundHttpException('User not found.');
     }
 
-    public function isBanned(User $user)
-    {
-        if($user->status==1) {
-            return 1;
-        }
-        return 0;
-    }
-
-    public function isBannedById($id)
-    {
-        return $this->isBanned($this->findById($id));
-    }
 }

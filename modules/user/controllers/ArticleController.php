@@ -1,15 +1,14 @@
 <?php
 
 namespace app\modules\user\controllers;
-use app\components\PhotoStorage;
-use app\models\forms\ArticleForm;
-use app\models\modules\services\ArticleGridService;
-use app\models\modules\services\ProfileService;
+
+use app\modules\models\forms\ArticleForm;
+use app\modules\models\services\ArticleGridService;
+use app\modules\models\services\ProfileService;
 use app\models\repositories\ArticleRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
@@ -62,16 +61,14 @@ class ArticleController extends Controller
                 'model' => $article,
             ]);
         } else return $this->redirect(['/user/article']);
-
     }
-
     public function actionCreate()
     {
         $form = new ArticleForm();
         if ($form->load(Yii::$app->request->post())) {
             $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
 
-            if ($this->articleGridService->save($form)){
+            if ($form->validate() && $this->articleGridService->save($form)){
                 return $this->redirect(['index']);
             }
         }
@@ -88,7 +85,7 @@ class ArticleController extends Controller
             if(Yii::$app->request->isPost) {
                 if ($form->load(Yii::$app->request->post())) {
                     $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
-                    if ($this->articleGridService->update($model,$form)) {
+                    if ($form->validate() && $this->articleGridService->update($model,$form)) {
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 }
@@ -99,7 +96,6 @@ class ArticleController extends Controller
         } else {
             return $this->redirect('/user/article');
         }
-
     }
 
     public function actionDelete($id)
@@ -109,6 +105,5 @@ class ArticleController extends Controller
             $model->delete();
             return $this->redirect(['index']);
         } else return $this->redirect('/user/article');
-
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace app\models\forms;
+namespace app\modules\models\forms;
 
 use yii\base\Model;
 use app\models\entities\User;
@@ -30,7 +30,7 @@ class ArticleForm extends Model
             [['author'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author' => 'id']],
             [['photo'], 'safe'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 

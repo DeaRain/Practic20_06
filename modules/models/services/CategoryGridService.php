@@ -1,15 +1,10 @@
 <?php
-namespace app\models\modules\services;
+namespace app\modules\models\services;
 
 use app\models\entities\Article;
 use app\models\entities\Category;
-use app\models\forms\ArticleForm;
-use app\models\forms\LoginForm;
-use app\models\forms\SignupForm;
-use app\models\entities\User;
-use app\models\modules\forms\CategoryForm;
+use app\modules\models\forms\CategoryForm;
 use Yii;
-use yii\data\ActiveDataProvider;
 
 class CategoryGridService
 {
@@ -42,8 +37,6 @@ class CategoryGridService
 
         return $model->save();
     }
-
-
 
     private function photoTransform(CategoryForm $form){
         if($form->validate('imageFile')) {

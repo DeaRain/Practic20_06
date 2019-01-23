@@ -1,15 +1,10 @@
 <?php
-namespace app\models\modules\services;
+namespace app\modules\models\services;
 
 use app\models\entities\Article;
-use app\models\forms\ArticleForm;
-use app\models\forms\LoginForm;
-use app\models\forms\SignupForm;
-use app\models\entities\User;
-use app\models\modules\forms\ArticleAdminForm;
+use app\modules\models\forms\ArticleForm;
 use app\models\repositories\ArticleRepository;
 use Yii;
-use yii\data\ActiveDataProvider;
 
 class ArticleGridService
 {
@@ -71,6 +66,7 @@ class ArticleGridService
         }
         return null;
     }
+
     private function photoTransform($form){
         if($form->validate('imageFile')) {
             $form->photo = Yii::$app->photoStorage->saveImage($form->imageFile, Article::LOCATION_PATH);

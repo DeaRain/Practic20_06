@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\modules\models\forms;
 
 use Yii;
+use yii\base\Model;
 
 /**
  * This is the model class for table "category".
@@ -13,24 +14,17 @@ use Yii;
  *
  * @property Article[] $articles
  */
-class Category extends \yii\db\ActiveRecord
+class CategoryForm extends Model
 {
     public $imageFile;
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'category';
-    }
-
-    /**
-     * @inheritdoc
-     */
+    public $id;
+    public $name;
+    public $descr;
+    public $photo;
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name','descr'], 'required'],
             [['descr'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
@@ -50,24 +44,4 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getArticles()
-    {
-        return $this->hasMany(Article::className(), ['category_id' => 'id']);
-    }
-
-    public static function getCategoryes()
-    {
-        return self::find()->all();
-    }
-
-    public static function findById($id){
-        return self::find()->where(['id'=>$id])->limit(1)->one();
-    }
-
-    public static function getActiveArticleQuery(){
-        return Article::find()->one();
-    }
 }

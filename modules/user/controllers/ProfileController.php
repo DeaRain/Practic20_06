@@ -7,7 +7,6 @@
  */
 namespace app\modules\user\controllers;
 
-use app\models\modules\services\ProfileService;
 use app\models\repositories\UserRepository;
 use yii\web\Controller;
 
