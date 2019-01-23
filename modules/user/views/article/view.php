@@ -16,8 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <article>
         <p>
             <span class="image right">
-                <?= yii\helpers\Html::img('/images/article/'.$model['id'].'.jpg') ?>
-                <p></p>
                 <h1><?= Html::encode($this->title) ?></h1>
                 <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                 <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
@@ -40,11 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             ['attribute'=>'category_id',
                 'value'=>function($data){
-                    return \app\models\entities\Category::findOne(['id'=>$data->category_id])->name;
+                    return $data->category->name;
                 }],
             ['attribute'=>'author',
                 'value'=>function($data){
-                    return \app\models\entities\User::findOne(['id'=>$data->author])->username;
+                    return $data->user->username;
                 }],
             ['attribute'=>'status',
                 'value'=>function($data){

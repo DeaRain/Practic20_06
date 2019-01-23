@@ -5,7 +5,9 @@ use app\components\PhotoStorage;
 use app\models\forms\ArticleForm;
 use app\models\modules\services\ArticleGridService;
 use app\models\modules\services\ProfileService;
+use app\models\repositories\ArticleRepository;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -40,11 +42,16 @@ class ArticleController extends Controller
         ];
     }
 
-    public function actionIndex($active=false,$moder=false)
+    public function actionIndex($active=false,$onCheck=false)
     {
-        $queryFilter = $this->articleGridService->getQueryFilter($this->user->getId(),$active,$moder);
-        $dataProvider = $this->articleGridService->getDataProvider($queryFilter);
-        return $this->render('index', compact(['dataProvider','active','moder','$searchModel']));
+        $queryFilter = $this->articleGridService->getQueryFilter($this->user->getId(),$active,$onCheck);
+        $dataProvider = new ActiveDataProvider([
+            'query' => (new ArticleRepository())->getQueryWithAndWhere(["category"],$queryFilter),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->render('index', compact(['dataProvider','active','onCheck','$searchModel']));
     }
 
     public function actionView($id)

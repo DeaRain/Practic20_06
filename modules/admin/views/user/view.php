@@ -36,9 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             ['attribute'=>'status',
                 'value'=>function($data){
-                    if($data->status==1){ return 'Заблокирован';}
-                    elseif($data->status==10) return 'Активный';
-                    else $data->status;
+        return (new \app\models\modules\services\ProfileService())->userStatus($data);
                 }],
             'created_at',
             'updated_at',

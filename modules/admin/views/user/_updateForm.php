@@ -25,7 +25,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'status')->dropDownList([
         '10' => 'Активный',
         '1' => 'Заблокирован',
-        '0' =>'Удален',
     ]); ?>
 
     <?= $form->field($model, 'role')->dropDownList([

@@ -20,8 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать новую статью', ['create'], ['class' => 'btn btn-success']) ?>
     <div class="image right">
-        <input type="checkbox" id="moder" onchange="MAcheck()" <?php if($moder=='ok') echo 'checked'?> >
-        <label for="moder">На модерации</label>
+        <input type="checkbox" id="onCheck" onchange="MAcheck()" <?php if($onCheck=='ok') echo 'checked'?> >
+        <label for="onCheck">На модерации</label>
         <input type="checkbox" id="active" onchange="MAcheck()" <?php if($active=='ok') echo 'checked'?> >
         <label for="active">Активнен</label>
     </div>
@@ -62,13 +62,13 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <script type="text/javascript">
-    chboxM=document.getElementById('moder');
+    chboxM=document.getElementById('onCheck');
     chboxA=document.getElementById('active');
     function MAcheck(){
-        var MAurl="?moder=no";
+        var MAurl="?onCheck=no";
 
         if(chboxM.checked) {
-            MAurl="?moder=ok";
+            MAurl="?onCheck=ok";
         }
         if(chboxA.checked) {
             MAurl=MAurl+ "&active=ok"

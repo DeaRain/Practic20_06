@@ -19,7 +19,10 @@ class ArticleRepository
         }
         throw new NotFoundHttpException('The article does not exist.');
     }
-
+    public function getQueryWithAndWhere(array $with,array $where)
+    {
+        return Article::find()->with($with)->where($where);
+    }
     public function getQueryWith(array $with)
     {
         return Article::find()->with($with);

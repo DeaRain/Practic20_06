@@ -8,19 +8,20 @@
 namespace app\modules\user\controllers;
 
 use app\models\modules\services\ProfileService;
+use app\models\repositories\UserRepository;
 use yii\web\Controller;
 
 class ProfileController extends Controller
 {
     public function actionIndex()
     {
-        $user = (new ProfileService())->getUserById(\Yii::$app->user->getId());
+        $user = (new UserRepository())->findModel(\Yii::$app->user->getId());
         return $this->render('index',compact('user'));
     }
 
     public function actionBanned()
     {
-        $user = (new ProfileService())->getUserById(\Yii::$app->user->getId());
+        $user = (new UserRepository())->findModel(\Yii::$app->user->getId());
         return $this->render('banned',compact('user'));
     }
 }

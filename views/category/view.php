@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <p><?=$category['descr']?></p>
     </div>
     <span class="image object">
-        <?= yii\helpers\Html::img('/images/all/'.$category['id'].'.jpg') ?>
+        <?= yii\helpers\Html::img($category->photoPath) ?>
     </span>
 </section>
 

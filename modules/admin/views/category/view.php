@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <article>
         <p>
             <span class="image right">
-                <?= yii\helpers\Html::img('/images/all/'.$model['id'].'.jpg') ?>
+                <?= yii\helpers\Html::img(Yii::$app->photoStorage->getImagePath($model->photo,\app\models\entities\Category::LOCATION_PATH)) ?>
                 <p>
                 <h1><?= Html::encode($this->title) ?></h1>
                     <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

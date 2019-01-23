@@ -31,7 +31,14 @@ class UserRepository
         if (($model = User::findOne($id)) !== null) {
             return $model;
         }
+        throw new NotFoundHttpException('User not found.');
+    }
 
+    public function findModelByName($username)
+    {
+        if (($model = User::findOne(['username' => $username])) !== null) {
+            return $model;
+        }
         throw new NotFoundHttpException('User not found.');
     }
 

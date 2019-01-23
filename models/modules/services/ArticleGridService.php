@@ -7,6 +7,7 @@ use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
 use app\models\entities\User;
 use app\models\modules\forms\ArticleAdminForm;
+use app\models\repositories\ArticleRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -22,16 +23,6 @@ class ArticleGridService
             $queryFilter = ['status'=>0,'author'=>$authorId];
         }
         return $queryFilter;
-    }
-
-    public function getDataProvider($queryFilter, $pageSize = 20)
-    {
-        return $dataProvider = new ActiveDataProvider([
-            'query' => Article::find()->with('category')->where($queryFilter),
-            'pagination' => [
-                'pageSize' => $pageSize,
-            ],
-        ]);
     }
 
     public function EntityToForm(Article $model){
@@ -74,18 +65,12 @@ class ArticleGridService
     }
 
     public function getUserArticle($articleId, $userId){
-        $article = $this->getArticle($articleId);
+        $article = (new ArticleRepository())->findModel($articleId);
         if($article->author == $userId){
             return $article;
         }
         return null;
     }
-    public function getArticle($id){
-        if (($model = Article::findOne($id)) !== null) {
-            return $model;
-        }
-    }
-
     private function photoTransform($form){
         if($form->validate('imageFile')) {
             $form->photo = Yii::$app->photoStorage->saveImage($form->imageFile, Article::LOCATION_PATH);

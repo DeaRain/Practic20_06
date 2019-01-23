@@ -101,6 +101,8 @@ class UserController extends Controller
         if ($form->load(Yii::$app->request->post())) {
             if ($this->userGridService->update($model, $form)) {
                 return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                echo "123";die;
             }
         }
         return $this->render('update', [
