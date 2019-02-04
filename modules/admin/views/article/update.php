@@ -3,11 +3,12 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\models\forms\ArticleForm */
+/* @var $form app\modules\models\forms\ArticleForm */
+/* @var $article app\models\entities\Article */
 
-$this->title = 'Измененье статьи : '.$model->name;
+$this->title = 'Измененье статьи : ' . $article->name;
 $this->params['breadcrumbs'][] = ['label' => 'Список статей', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $article->name, 'url' => ['view', 'id' => $article->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="article-update">
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <article>
         <p>
             <span class="image right">
-               <?= yii\helpers\Html::img(Yii::$app->photoStorage->getImagePath($model->photo,\app\models\entities\Article::LOCATION_PATH)) ?>
+               <?= yii\helpers\Html::img($article->getPhoto()) ?>
                 <p></p>
                 <h1><?= Html::encode($this->title) ?></h1>
                 <p></p>
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = 'Update';
     </article>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' => $form,
     ]) ?>
 
 </div>

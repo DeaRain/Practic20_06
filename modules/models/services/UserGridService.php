@@ -2,6 +2,8 @@
 namespace app\modules\models\services;
 
 use app\models\entities\User;
+use app\models\repositories\ArticleRepository;
+use app\models\repositories\UserRepository;
 use app\modules\models\forms\UserCreateForm;
 use app\modules\models\forms\UserUpdateForm;
 use app\models\repositories\RBACRepository;
@@ -11,6 +13,7 @@ class UserGridService
     public function EntityToForm(User $model)
     {
         $form = new UserUpdateForm();
+        $form->id = $model->id;
         $form->username = $model->username;
         $form->auth_key = $model->auth_key;
         $form->password_hash = $model->password_hash;
@@ -23,32 +26,34 @@ class UserGridService
         return $form;
     }
 
-    public function save(UserCreateForm $form)
+    public function create(UserCreateForm $form)
     {
         $user = User::create($form->username,
             $form->email,
             $form->password);
 
-        $result = $user->save();
-        $form->id = $user->id;
-        (new RBACRepository())->assignNewUserRole($user, $form->role);
-       return $result;
+        if ((new UserRepository())->save($user) && (new RBACRepository())->assignNewUserRole($user, $form->role)) {
+            return $user->id;
+        }
+
+        return false;
     }
 
-    public function update(User $model, UserUpdateForm $form)
+    public function update(User $user, UserUpdateForm $form)
     {
-        $model->username = $form->username;
-        $model->auth_key = $form->auth_key;
-        $model->password_hash = $form->password_hash;
         if($form->password_reset_token == "") $form->password_reset_token = null;
-        $model->password_reset_token = $form->password_reset_token;
-        $model->email = $form->email;
-        $model->status = $form->status;
-        $model->created_at = $form->created_at;
-        $model->updated_at = time();
+        $user->edit($form->username,
+            $form->auth_key,
+            $form->email,
+            $form->password_hash,
+            $form->password_reset_token,
+            $form->status,
+            $form->created_at
+            );
 
-        (new RBACRepository())->updateUserRole($model, $form->role);
+        (new UserRepository())->save($user);
+        (new RBACRepository())->updateUserRole($user, $form->role);
 
-        return $model->save();
+        return true;
     }
 }

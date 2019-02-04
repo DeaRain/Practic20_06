@@ -4,6 +4,7 @@ namespace app\modules\models\forms;
 use yii\base\Model;
 use app\models\entities\User;
 use app\models\entities\Category;
+use yii\web\UploadedFile;
 
 class ArticleForm extends Model
 {
@@ -43,5 +44,14 @@ class ArticleForm extends Model
             'photo' => 'Главное фото',
             'status' => 'Статус',
         ];
+    }
+
+    public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+            $this->imageFile = UploadedFile::getInstance($this, 'imageFile');
+            return true;
+        }
+        return false;
     }
 }

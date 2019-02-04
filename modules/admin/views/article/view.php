@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             ['attribute'=>'photo',
                 'value'=>function($data){
-                    return $data->photoPath;
+                    return $data->getPhoto();
                 },
                 'format' => ['image',['height'=>'200']]
                 ],

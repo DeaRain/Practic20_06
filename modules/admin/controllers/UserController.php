@@ -58,10 +58,11 @@ class UserController extends Controller
     {
         $form = new UserCreateForm();
 
-        if ($form->load(Yii::$app->request->post()) && $form->validate() && $this->userGridService->save($form)) {
-            return $this->redirect(['view', 'id' => $form->id]);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            if ($id = $this->userGridService->create($form)) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
         }
-
         return $this->render('create', [
             'model' => $form,
         ]);
@@ -71,8 +72,8 @@ class UserController extends Controller
     {
         $model = $this->userRepository->findModel($id);
         $form = $this->userGridService->EntityToForm($model);
-        if ($form->load(Yii::$app->request->post())) {
-            if ($form->validate() && $this->userGridService->update($model, $form)) {
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            if ($this->userGridService->update($model, $form)) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }

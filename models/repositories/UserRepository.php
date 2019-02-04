@@ -30,4 +30,20 @@ class UserRepository
         }
         throw new NotFoundHttpException('User not found.');
     }
+
+    public function save(User $user)
+    {
+        if (!$user->save()) {
+            throw new ServerErrorHttpException('Saving error.');
+        }
+        return true;
+    }
+
+    public function remove(User $user)
+    {
+        if (!$user->delete()) {
+            throw new ServerErrorHttpException('Deleting error.');
+        }
+        return true;
+    }
 }

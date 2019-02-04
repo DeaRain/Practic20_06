@@ -42,6 +42,18 @@ class User extends ActiveRecord implements IdentityInterface
         return $user;
     }
 
+    public function edit($username,$auth_key, $email, $password_hash, $password_reset_token, $status, $created_at)
+    {
+        $this->username = $username;
+        $this->auth_key = $auth_key;
+        $this->password_hash = $password_hash;
+        $this->password_reset_token = $password_reset_token;
+        $this->email = $email;
+        $this->status = $status;
+        $this->created_at = $created_at;
+        $this->updated_at = time();
+    }
+
     public static function tableName()
     {
         return '{{%user}}';

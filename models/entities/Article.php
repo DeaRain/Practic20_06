@@ -2,6 +2,7 @@
 
 namespace app\models\entities;
 
+use app\models\behaviors\PhotoStorage;
 use Yii;
 
 /**
@@ -24,6 +25,17 @@ class Article extends \yii\db\ActiveRecord
         return 'article';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => PhotoStorage::className(),
+                'path' => getenv('ARTICLE_LOCATION_PATH'),
+                'defaultName' => 'default.jpg',
+            ]
+        ];
+    }
+
     public function getTextStatus()
     {
         if ($this->status) {
@@ -33,7 +45,7 @@ class Article extends \yii\db\ActiveRecord
         }
     }
 
-    public static function create($category_id, $name, $content, $author, $status, $photo)
+    public static function create($category_id, $name, $content, $author, $status)
     {
         $article = new static();
         $article->category_id = $category_id;
@@ -41,8 +53,16 @@ class Article extends \yii\db\ActiveRecord
         $article->content = $content;
         $article->author = $author;
         $article->status = $status;
-        $article->photo = $photo;
         return $article;
+    }
+
+    public function edit($category_id, $name, $content, $author, $status)
+    {
+        $this->category_id = $category_id;
+        $this->name = $name;
+        $this->content = $content;
+        $this->author = $author;
+        $this->status = $status;
     }
 
     public function getAuthorEntity()
@@ -58,10 +78,6 @@ class Article extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
-    }
-
-    public function getPhotoPath(){
-        return Yii::$app->photoStorage->getImagePath($this->photo, getenv('ARTICLE_LOCATION_PATH'));
     }
 
     public static function findById($id){

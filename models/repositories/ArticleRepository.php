@@ -31,4 +31,21 @@ class ArticleRepository
     {
         return Article::find()->with($with);
     }
+
+    public function save(Article $article)
+    {
+        if (!$article->save()) {
+            throw new ServerErrorHttpException('Saving error.');
+        }
+        return true;
+    }
+
+    public function remove(Article $article)
+    {
+        if (!$article->delete()) {
+            throw new ServerErrorHttpException('Deleting error.');
+        }
+        return true;
+    }
+
 }

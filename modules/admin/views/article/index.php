@@ -36,13 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'photo',
                 'value'=>function($data){
-                    return $data->photoPath;
+                    return $data->getPhoto();
                 },
                 'format' => ['image',['width'=>'100']]
             ],
           ['attribute'=>'status',
                 'value'=>function($data){
-                        return $data->textStatus;
+                    return $data->textStatus;
                 }],
             ['class' => 'yii\grid\ActionColumn'],
         ],

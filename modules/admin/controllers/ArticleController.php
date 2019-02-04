@@ -57,10 +57,9 @@ class ArticleController extends Controller
     public function actionCreate()
     {
         $form = new ArticleForm();
-        if ($form->load(Yii::$app->request->post())) {
-            $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
-            if ($form->validate() && $this->articleGridService->save($form)){
-                return $this->redirect(['index']);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            if ($id = $this->articleGridService->create($form)){
+                return $this->redirect(['view', 'id' => $id]);
             }
         }
         return $this->render('create', [
@@ -71,28 +70,22 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->articleRepository->findModel($id);
-        if($model){
-            $form = $this->articleGridService->EntityToForm($model);
-            if(Yii::$app->request->isPost) {
-                if ($form->load(Yii::$app->request->post())) {
-                    $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
-                    if ($form->validate() && $this->articleGridService->update($model,$form)) {
-                        return $this->redirect(['view', 'id' => $model->id]);
-                    }
-                }
+        $form = $this->articleGridService->EntityToForm($model);
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            if ($this->articleGridService->update($model,$form)) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-            return $this->render('update', [
-                'model' => $form,
-            ]);
-        } else {
-            return $this->redirect('/admin/article');
         }
+        return $this->render('update', [
+            'article' => $model,
+            'form' => $form,
+        ]);
     }
 
     public function actionDelete($id)
     {
-        $this->articleRepository->findModel($id)->delete();
-
+        $this->articleGridService->remove($id);
         return $this->redirect(['index']);
     }
 

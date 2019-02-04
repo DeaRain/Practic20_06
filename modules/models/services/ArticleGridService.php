@@ -32,32 +32,31 @@ class ArticleGridService
         return $form;
     }
 
-    public function save(ArticleForm $form)
+    public function create(ArticleForm $form)
     {
-       $this->photoTransform($form);
        $article = Article::create(
            $form->category_id,
            $form->name,
            $form->content,
            $form->author,
-           $form->status,
-           $form->photo
+           $form->status
        );
-       return $article->save();
+
+       $article->setPhoto($form->imageFile);
+       if((new ArticleRepository())->save($article)){
+           return $article->id;
+       }
+
+       return false;
     }
 
-    public function update(Article $model,ArticleForm $form)
+    public function update(Article $article,ArticleForm $form)
     {
-        $this->photoTransform($form);
+        $article->edit($form->category_id, $form->name, $form->content, $form->author, $form->status);
 
-        $model->category_id = $form->category_id;
-        $model->name = $form->name;
-        $model->content = $form->content;
-        $model->author = $form->author;
-        $model->status = $form->status;
-        $model->photo = $form->photo;
+        $article->setPhoto($form->imageFile);
 
-        return $model->save();
+        return (new ArticleRepository())->save($article);
     }
 
     public function getUserArticle($articleId, $userId)
@@ -69,12 +68,14 @@ class ArticleGridService
         return null;
     }
 
-    private function photoTransform($form)
+    public function remove($id)
     {
-        if($form->validate('imageFile')) {
-            $form->photo = Yii::$app->photoStorage->saveImage($form->imageFile, getenv('ARTICLE_LOCATION_PATH'));
-        } else {
-            $form->photo = Article::DEF_PHOTO;
-        }
+        $article = (new ArticleRepository())->findModel($id);
+        return (new ArticleRepository())->remove($article);
+    }
+
+    public function removeByEntiti($article)
+    {
+        return (new ArticleRepository())->remove($article);
     }
 }

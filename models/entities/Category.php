@@ -51,17 +51,11 @@ class Category extends \yii\db\ActiveRecord
         return Article::find()->one();
     }
 
-    public function getPhotoPath(){
-        return Yii::$app->photoStorage->getImagePath($this->photo, getenv('CATEGORY_LOCATION_PATH'));
-    }
-
     public static function create($name, $descr)
     {
         $category = new static();
         $category->name = $name;
         $category->descr = $descr;
-        $category->photo = getenv('CATEGORY_DEFAULT_PHOTO_NAME');
-
         return $category;
     }
 
@@ -70,19 +64,4 @@ class Category extends \yii\db\ActiveRecord
         $this->name = $name;
         $this->descr = $descr;
     }
-
-//    public function setPhoto(UploadedFile $imageFile = null)
-//    {
-//        if ($imageFile) {
-//            $this->photo = Yii::$app->photoStorage->saveImage($imageFile, getenv('CATEGORY_LOCATION_PATH'));
-//        } elseif ($this->photo == null) {
-//            $this->photo = getenv('CATEGORY_DEFAULT_PHOTO_NAME');
-//        }
-//    }
-//    public function getPhoto()
-//    {
-//        $name = substr_replace($this->photo, '/', 4, 0);
-//        $name = substr_replace($name, '/', 2, 0);
-//        return '/web/'. getenv('CATEGORY_LOCATION_PATH') . $name;
-//    }
 }

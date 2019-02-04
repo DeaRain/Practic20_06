@@ -20,6 +20,7 @@ class RBACRepository
             $userRole = $this->auth->getRole('user');
         }
         $this->auth->assign($userRole, $user->getId());
+        return true;
     }
 
     public function updateUserRole(User $user, $role)
