@@ -5,7 +5,7 @@
  * Date: 30.12.2018
  * Time: 19:18
  */
-namespace app\components;
+namespace app\widgets;
 
 use app\models\entities\Category;
 use yii\base\Widget;

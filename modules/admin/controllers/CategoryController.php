@@ -55,15 +55,14 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $form = new CategoryForm();
-        if ($form->load(Yii::$app->request->post())) {
-            $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
 
-            if ($form->validate() && $this->categoryGridService->save($form)){
-                return $this->redirect(['index']);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            if ($id = $this->categoryGridService->create($form)){
+                return $this->redirect(['view', 'id' => $id]);
             }
         }
         return $this->render('create', [
-            'model' => $form,
+            'form' => $form,
         ]);
     }
 
@@ -71,22 +70,21 @@ class CategoryController extends Controller
     {
         $model = (new CategoryRepository())->findModel($id);
         $form = $this->categoryGridService->EntityToForm($model);
-        if(Yii::$app->request->isPost) {
-            if ($form->load(Yii::$app->request->post())) {
-                $form->imageFile = UploadedFile::getInstance($form, 'imageFile');
-                if ($form->validate() && $this->categoryGridService->update($model,$form)) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            if ($this->categoryGridService->update($model, $form)) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
         return $this->render('update', [
-            'model' => $form,
+            'category' => $model,
+            'form' => $form,
         ]);
     }
 
     public function actionDelete($id)
     {
-        (new CategoryRepository())->findModel($id)->delete();
+        $this->categoryGridService->remove($id);
 
         return $this->redirect(['index']);
     }

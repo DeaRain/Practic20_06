@@ -3,6 +3,7 @@ namespace app\models\repositories;
 
 use app\models\entities\Category;
 use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 
 class CategoryRepository
 {
@@ -22,5 +23,21 @@ class CategoryRepository
             return $model;
         }
         throw new NotFoundHttpException('The category does not exist.');
+    }
+
+    public function save(Category $category)
+    {
+        if (!$category->save()) {
+            throw new ServerErrorHttpException('Saving error.');
+        }
+        return true;
+    }
+
+    public function remove(Category $category)
+    {
+        if (!$category->delete()) {
+            throw new ServerErrorHttpException('Deleting error.');
+        }
+        return true;
     }
 }

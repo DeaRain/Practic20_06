@@ -6,7 +6,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\assets\AppAsset;
-use app\models\Category;
 AppAsset::register($this);
 
 ?>
@@ -80,7 +79,7 @@ AppAsset::register($this);
                     echo '<p><p><a href='.Url::to(['/auth/signup','userType'=>'admin']).' class="button primary fit">Регистрация Админа</a></li>';
                 endif; ?>
 
-                <?= \app\components\CategoryList::widget([
+                <?= \app\widgets\CategoryList::widget([
                     'title' => 'Список категорий',
                     'limit'=>9,
                 ]) ?>

@@ -4,11 +4,12 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\models\forms\CategoryForm */
+/* @var $form app\modules\models\forms\CategoryForm */
+/* @var $category app\models\entities\Category */
 
-$this->title = 'Изменение категории : '.$model->name;
+$this->title = 'Изменение категории : '.$category->name;
 $this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $category->name, 'url' => ['view', 'id' => $category->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="category-update">
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <article>
         <p>
             <span class="image right">
-                <?= yii\helpers\Html::img(Yii::$app->photoStorage->getImagePath($model->photo,\app\models\entities\Category::LOCATION_PATH)) ?>
+                <?= yii\helpers\Html::img($category->getPhoto())?>
                 <p>
                 <h1><?= Html::encode($this->title) ?></h1>
                 </p>
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = 'Update';
         </p>
     </article>
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' => $form,
     ]) ?>
 
 </div>
