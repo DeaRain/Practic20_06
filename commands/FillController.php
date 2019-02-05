@@ -69,8 +69,6 @@ class FillController extends Controller
             }
         }
 
-
-
         echo "Fill Accept"."\n";
         return ExitCode::OK;
     }
