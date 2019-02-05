@@ -90,7 +90,7 @@ class ArticleController extends Controller
 
     public function actionDelete($id)
     {
-        $model = $this->articleGridService->getUserArticle($id,$this->user->getId());
+        $model = $this->articleGridService->getUserArticle($id, $this->user->getId());
         if($model && $this->articleGridService->removeByEntiti($model)){
             return $this->redirect(['index']);
         }

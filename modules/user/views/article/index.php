@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
             ['attribute'=>'author',
                 'value'=>function($data){
-                    return $data->authorEntity->username;
+                    return $data->user->username;
                 }],
             ['attribute'=>'photo',
                 'value'=>function($data){
