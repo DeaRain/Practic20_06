@@ -14,7 +14,7 @@ class ArticleController extends Controller
     public function actionView($id)
     {
         $article = (new ArticleRepository())->findModel($id);
-        if($article->status == 0) throw new ForbiddenHttpException('Article under review');
+        if($article->status == 0 && $article->author != Yii::$app->user->getId()) throw new ForbiddenHttpException('Article under review');
         $catName = $article->category->name;
 
         return $this->render('view',compact('article','catName'));

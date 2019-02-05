@@ -12,16 +12,25 @@ class AuthService
 {
     public function signupWithRBAC(SignupForm $form, $userType)
     {
-        if ($user = $this->signup($form)) {
+        if ($user = $this->createNewUser($form->username, $form->email, $form->password)) {
             (new RBACRepository())->assignNewUserRole($user, $userType);
             return $user;
         }
         return null;
     }
 
-    public function signup(SignupForm $form)
+    public function createNewUserWithRBAC($username, $email, $password, $userType)
     {
-        $user = User::create($form->username, $form->email, $form->password);
+        if ($user = $this->createNewUser($username, $email, $password)) {
+            (new RBACRepository())->assignNewUserRole($user, $userType);
+            return $user;
+        }
+        return null;
+    }
+
+    public function createNewUser($username, $email, $password)
+    {
+        $user = User::create($username, $email, $password);
         return $user->save() ? $user : null;
     }
 
