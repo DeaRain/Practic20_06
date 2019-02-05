@@ -4,7 +4,6 @@ namespace app\modules\models\services;
 use app\models\entities\Article;
 use app\modules\models\forms\ArticleForm;
 use app\models\repositories\ArticleRepository;
-use Yii;
 
 class ArticleGridService
 {

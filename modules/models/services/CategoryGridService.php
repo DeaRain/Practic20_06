@@ -1,11 +1,9 @@
 <?php
 namespace app\modules\models\services;
 
-use app\models\entities\Article;
 use app\models\entities\Category;
 use app\models\repositories\CategoryRepository;
 use app\modules\models\forms\CategoryForm;
-use Yii;
 
 class CategoryGridService
 {

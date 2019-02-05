@@ -8,9 +8,7 @@ use app\models\repositories\ArticleRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 class ArticleController extends Controller
 {

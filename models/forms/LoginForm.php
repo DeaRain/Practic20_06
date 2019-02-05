@@ -2,7 +2,6 @@
 namespace app\models\forms;
 
 use app\models\services\AuthService;
-use Yii;
 use yii\base\Model;
 
 class LoginForm extends Model

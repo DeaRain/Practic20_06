@@ -7,18 +7,14 @@
 
 namespace app\commands;
 
-use app\models\forms\SignupForm;
 use app\models\repositories\ArticleRepository;
 use app\models\repositories\CategoryRepository;
-use app\models\repositories\RBACRepository;
-use app\models\repositories\UserRepository;
 use app\models\services\AuthService;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use app\models\entities\Article;
 use app\models\entities\Category;
 use Yii;
-use app\models\entities\User;
 
 class FillController extends Controller
 {

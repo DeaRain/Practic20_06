@@ -7,12 +7,9 @@ use app\modules\models\forms\ArticleForm;
 use app\modules\models\services\ArticleFilterService;
 use app\modules\models\services\ArticleGridService;
 use app\modules\models\services\ProfileService;
-use app\models\repositories\ArticleRepository;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 class ArticleController extends Controller
 {

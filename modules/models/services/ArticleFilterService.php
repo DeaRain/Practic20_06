@@ -1,7 +1,6 @@
 <?php
 namespace app\modules\models\services;
 
-use app\models\entities\Article;
 use app\models\repositories\ArticleRepository;
 use app\modules\models\forms\ArticleFilterForm;
 use yii\data\ActiveDataProvider;

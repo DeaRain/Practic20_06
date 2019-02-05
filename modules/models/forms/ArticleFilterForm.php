@@ -2,7 +2,6 @@
 
 namespace app\modules\models\forms;
 
-
 use yii\base\Model;
 
 class ArticleFilterForm extends Model

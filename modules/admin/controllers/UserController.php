@@ -8,7 +8,6 @@ use app\models\repositories\UserRepository;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 class UserController extends Controller

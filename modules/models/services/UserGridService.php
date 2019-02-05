@@ -2,7 +2,6 @@
 namespace app\modules\models\services;
 
 use app\models\entities\User;
-use app\models\repositories\ArticleRepository;
 use app\models\repositories\UserRepository;
 use app\modules\models\forms\UserCreateForm;
 use app\modules\models\forms\UserUpdateForm;

@@ -3,8 +3,6 @@
 namespace app\models\entities;
 
 use app\models\behaviors\PhotoStorage;
-use Yii;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "category".
