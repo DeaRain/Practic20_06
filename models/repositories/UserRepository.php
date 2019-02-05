@@ -15,6 +15,7 @@ class UserRepository
     {
         return User::find()->all();
     }
+
     public function findModel($id)
     {
         if (($model = User::findOne($id)) !== null) {

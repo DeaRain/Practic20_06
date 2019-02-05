@@ -23,7 +23,7 @@ class ArticleController extends Controller
     public function actionSearch()
     {
         $searchModel = new ArticleSearchForm();
-        $dataProvider = (new SearchService())->searchArticle($searchModel, Yii::$app->request->queryParams);
+        $dataProvider = (new SearchService())->getSearchProvider($searchModel, Yii::$app->request->queryParams);
 
         return $this->render('search', [
             'searchModel' => $searchModel,

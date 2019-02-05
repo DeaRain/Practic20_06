@@ -15,21 +15,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Создать новую статью', ['create'], ['class' => 'btn btn-success']) ?>
-    <div class="image right">
-        <input type="checkbox" id="onCheck" onchange="MAcheck()" <?php if($onCheck=='ok') echo 'checked'?> >
-        <label for="onCheck">На модерации</label>
-        <input type="checkbox" id="active" onchange="MAcheck()" <?php if($active=='ok') echo 'checked'?> >
-        <label for="active">Активнен</label>
-    </div>
-    </p>
+        <div class="row">
+            <div class="col-5">
+                <?= Html::a('Создать новую статью', ['create'], ['class' => 'btn btn-success']) ?>
+            </div>
+            <div class="col-7"">
+                 <div style="padding-right: 20px">
+                     <?= $this->render('_articleFilter', ['model' => $searchModel]) ?>
+                </div>
+            </div>
+        </div>
 
-    <?php
-    echo
-    GridView::widget([
+        <?= GridView::widget([
         'dataProvider' => $dataProvider,
-
         'columns' => [
             ['attribute'=>'category_id',
                 'value'=>function($data){
@@ -59,18 +57,3 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 </div>
 
-<script type="text/javascript">
-    chboxM=document.getElementById('onCheck');
-    chboxA=document.getElementById('active');
-    function MAcheck(){
-        var MAurl="?onCheck=no";
-
-        if(chboxM.checked) {
-            MAurl="?onCheck=ok";
-        }
-        if(chboxA.checked) {
-            MAurl=MAurl+ "&active=ok"
-        }
-        window.location.href = "/user/article/index"+MAurl;
-    }
-</script>

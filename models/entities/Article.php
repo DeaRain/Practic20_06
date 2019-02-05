@@ -65,11 +65,6 @@ class Article extends \yii\db\ActiveRecord
         $this->status = $status;
     }
 
-//    public function getAuthorEntity()
-//    {
-//        return $this->hasOne(User::className(), ['id' => 'author']);
-//    }
-
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'author']);
@@ -80,7 +75,4 @@ class Article extends \yii\db\ActiveRecord
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
-//    public static function findById($id){
-//        return self::find()->where(['id'=>$id])->limit(1)->one();
-//    }
 }

@@ -24,13 +24,13 @@ mihaildev\elfinder\Assets::noConflict($this);
         '0' => 'Отключен',
     ]); ?>
 
-<?= $form->field($model, 'content')->widget(CKEditor::className(),[
-    'editorOptions' => ElFinder::ckeditorOptions(['elfinder','path' => getenv(EDITOR_USER_FOLDER).Yii::$app->user->getId()],[
-        'preset' => getenv('EDITOR_OPTIONS_PRESENT'), //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-        'inline' => false, //по умолчанию false
-        'filter' => 'image',
-    ]),
-]);?>
+    <?= $form->field($model, 'content')->widget(CKEditor::className(),[
+        'editorOptions' => ElFinder::ckeditorOptions(['elfinder','path' => getenv(EDITOR_USER_FOLDER).Yii::$app->user->getId()],[
+            'preset' => getenv('EDITOR_OPTIONS_PRESENT'), //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+            'inline' => false, //по умолчанию false
+            'filter' => 'image',
+        ]),
+    ]);?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'button']) ?>
     </div>

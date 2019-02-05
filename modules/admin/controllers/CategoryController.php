@@ -85,7 +85,6 @@ class CategoryController extends Controller
     public function actionDelete($id)
     {
         $this->categoryGridService->remove($id);
-
         return $this->redirect(['index']);
     }
 }

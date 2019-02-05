@@ -85,7 +85,6 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         $this->userRepository->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 

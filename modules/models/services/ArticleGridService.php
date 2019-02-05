@@ -8,18 +8,6 @@ use Yii;
 
 class ArticleGridService
 {
-    public function getQueryFilter($authorId, $active, $onCheck)
-    {
-        $queryFilter = ['author'=>$authorId];
-        if ($active == "ok" && $onCheck == "ok") {
-        } elseif ($active == "ok") {
-            $queryFilter = ['status'=>1, 'author'=>$authorId];
-        } elseif ($onCheck == "ok") {
-            $queryFilter = ['status'=>0, 'author'=>$authorId];
-        }
-        return $queryFilter;
-    }
-
     public function EntityToForm(Article $model)
     {
         $form = new ArticleForm();

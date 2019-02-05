@@ -11,14 +11,6 @@ class ArticleRepository
         return Article::find();
     }
 
-    public function findModel($id)
-    {
-        if (($model = Article::findOne($id)) !== null) {
-            return $model;
-        }
-        throw new NotFoundHttpException('The article does not exist.');
-    }
-
     public function getQueryWithAndWhere(array $with,array $where)
     {
         return Article::find()->with($with)->where($where);
@@ -30,6 +22,14 @@ class ArticleRepository
     public function getQueryWith(array $with)
     {
         return Article::find()->with($with);
+    }
+
+    public function findModel($id)
+    {
+        if (($model = Article::findOne($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The article does not exist.');
     }
 
     public function save(Article $article)

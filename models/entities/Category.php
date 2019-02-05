@@ -38,19 +38,6 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasMany(Article::className(), ['category_id' => 'id']);
     }
 
-//    public static function getCategoryes()
-//    {
-//        return self::find()->all();
-//    }
-
-//    public static function findById($id){
-//        return self::find()->where(['id'=>$id])->limit(1)->one();
-//    }
-
-//    public static function getActiveArticleQuery(){
-//        return Article::find()->one();
-//    }
-
     public static function create($name, $descr)
     {
         $category = new static();

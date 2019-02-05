@@ -1,16 +1,16 @@
 <?php
-namespace app\models\services;
+namespace app\modules\models\services;
 
 use app\models\entities\Article;
-use app\models\forms\ArticleSearchForm;
+use app\models\repositories\ArticleRepository;
+use app\modules\models\forms\ArticleFilterForm;
 use yii\data\ActiveDataProvider;
 
-class SearchService
+class ArticleFilterService
 {
-    public function getSearchProvider(ArticleSearchForm $form, $params, $pageSize = 6)
+    public function getSearchProvider($userId ,ArticleFilterForm $form, $params, $pageSize = 6)
     {
-        $query = Article::find();
-
+        $query = (new ArticleRepository())->getQueryWithAndWhere(["category"], ['author'=>$userId]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -23,8 +23,9 @@ class SearchService
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'name', $form->name])
-            ->andFilterWhere(['like', 'content', $form->content]);
+        if ($form->status != 2) {
+            $query->andFilterWhere(['like', 'status', $form->status]);
+        }
 
         return $dataProvider;
     }

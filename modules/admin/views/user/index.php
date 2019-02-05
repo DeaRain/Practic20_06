@@ -20,8 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            //['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'username',
             'email:email',
@@ -37,8 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>function($data){
                     return Yii::$app->formatter->asDate($data->created_at,'yyyy-MM-dd');
                 }],
-            //'updated_at',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -18,7 +18,6 @@ class FillController extends Controller
 {
     public function actionIndex()
     {
-
         $auth = Yii::$app->authManager;
         if(!$auth->getRole('user')) {
             $user = $auth->createRole('user');

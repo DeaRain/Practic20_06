@@ -2,7 +2,9 @@
 
 namespace app\modules\user\controllers;
 
+use app\modules\models\forms\ArticleFilterForm;
 use app\modules\models\forms\ArticleForm;
+use app\modules\models\services\ArticleFilterService;
 use app\modules\models\services\ArticleGridService;
 use app\modules\models\services\ProfileService;
 use app\models\repositories\ArticleRepository;
@@ -40,14 +42,16 @@ class ArticleController extends Controller
 
     public function actionIndex($active = false, $onCheck = false)
     {
-        $queryFilter = $this->articleGridService->getQueryFilter($this->user->getId(), $active, $onCheck);
-        $dataProvider = new ActiveDataProvider([
-            'query' => (new ArticleRepository())->getQueryWithAndWhere(["category"], $queryFilter),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-        return $this->render('index', compact(['dataProvider','active','onCheck','$searchModel']));
+        $searchModel = new ArticleFilterForm();
+
+        $dataProvider = (new ArticleFilterService())->getSearchProvider(
+            $this->user->getId(),
+            $searchModel,
+            Yii::$app->request->queryParams,
+            20
+        );
+
+        return $this->render('index', compact(['dataProvider','searchModel']));
     }
 
     public function actionView($id)
@@ -74,7 +78,7 @@ class ArticleController extends Controller
 
     public function actionUpdate($id)
     {
-        $model = $this->articleGridService->getUserArticle($id,$this->user->getId());
+        $model = $this->articleGridService->getUserArticle($id, $this->user->getId());
         $form = $this->articleGridService->EntityToForm($model);
 
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
